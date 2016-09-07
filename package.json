@@ -1,7 +1,7 @@
 {
-  "name": "Bandwagon",
+  "name": "bandwagon",
   "version": "1.0.0",
-  "description": "",
+  "description": "gravitational custom installer step",
   "main": "index.js",
   "scripts": {
     "start": "node src/server/index.js",
