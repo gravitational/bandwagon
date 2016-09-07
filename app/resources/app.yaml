@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: SystemApplication
+metadata:
+  name: bandwagon
+  namespace: kube-system
+  repository: gravitational.io
+  resourceVersion: 1.0.0
+hooks:
+  install:
+    spec:
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        name: bandwagon-install
+      spec:
+        template:
+          metadata:
+            name: bandwagon-install
+          spec:
+            restartPolicy: OnFailure
+            containers:
+              - name: debian-tall
+                image: quay.io/gravitational/debian-tall:0.0.1
+                command:
+                  - /usr/local/bin/kubectl
+                  - create
+                  - -f
+                  - /var/lib/gravity/resources/install.yaml
