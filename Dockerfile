@@ -11,7 +11,7 @@ COPY package.json /app/
 
 WORKDIR /app
 
-RUN npm install --production
+RUN npm install --production; npm cache clear
 
 COPY . /app
 run chown jenkins:jenkins /app -R
