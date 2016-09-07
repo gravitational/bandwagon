@@ -14,4 +14,5 @@ WORKDIR /app
 RUN npm install --production ; npm cache clear
 
 COPY . /app
-run chown jenkins:jenkins /app -R
+
+RUN npm run build

@@ -15,13 +15,8 @@ ENV?=staging
 .PHONY:docker-build
 docker-build:
 	docker build --build-arg UID=$$(id -u) --build-arg GID=$$(id -g) --force-rm=true -t bandwagon:$(TAG) .
-
-#
-# Starts the web site under local Docker
-#
-.PHONY: docker-run
-docker-run:
-	docker run -ti -p 3000:3000 --rm=true $(NOROOT) -t bandwagon:$(TAG) npm run start
+	mkdir -p dist
+	docker cp bandwagon:$(TAG):/app/dist/. dist
 
 #
 # Removes the local Docker container
@@ -63,3 +58,4 @@ build:
 .PHONY:clean
 clean:
 	rm -rf node_modules
+	rm -rf dist

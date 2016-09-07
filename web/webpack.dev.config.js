@@ -5,8 +5,8 @@ var webpack = require('webpack');
 
 var ROOT = '/';
 var PORT = '3001';
-var DIST_PATH = __dirname + "//src//client/build";
-var INDEX_HTML_PATH = __dirname + "//src//client/build";
+var DIST_PATH = __dirname + "//dist";
+var INDEX_HTML_PATH = __dirname + "//dist";
 
 var PROXY_TARGET = 'localhost:3000';
 var WEBPACK_CLIENT_ENTRY = 'webpack-dev-server/client?https://0.0.0.0:' + PORT;

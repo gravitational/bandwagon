@@ -2,7 +2,7 @@ var path = require('path');
 var HtmlWebPackPlugin = require('html-webpack-plugin');
 var CleanWebPackPlugin = require('clean-webpack-plugin');
 
-var outputPath = path.join(__dirname, '/src/client/build/');
+var outputPath = path.join(__dirname, '/dist/');
 
 var common = {
   /*
@@ -12,9 +12,9 @@ var common = {
   entry: {
 
     // entry point to main app
-    app: ['./src/client/index.jsx'],
+    app: ['./src/index.jsx'],
 
-    styles: ['./src/client/styles/index.scss']
+    styles: ['./src/styles/index.scss']
   },
 
   output: {
