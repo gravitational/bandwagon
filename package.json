@@ -4,6 +4,7 @@
   "description": "gravitational custom installer step",
   "main": "index.js",
   "scripts": {
+    "dev": "node webpack.dev.config.js",
     "start": "node src/server/index.js",
     "build": "node node_modules/webpack/bin/webpack.js"
   },
