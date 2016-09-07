@@ -1,4 +1,4 @@
-FROM node:5.0.0
+FROM node:5-slim
 
 ARG UID
 ARG GID
@@ -11,7 +11,7 @@ COPY package.json /app/
 
 WORKDIR /app
 
-RUN npm install --production; npm cache clear
+RUN npm install --production ; npm cache clear
 
 COPY . /app
 run chown jenkins:jenkins /app -R
