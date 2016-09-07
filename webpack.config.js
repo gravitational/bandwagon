@@ -72,13 +72,11 @@ var common = {
     }),
     new HtmlWebPackPlugin({
       inject: true,
-      title: 'Gravitational Installer Extenension App',
-      appMountId: 'app'
-     })
+      title: 'Gravitational Installer Extenension App'
+    })
  ]
 };
 
 common.devtool = 'source-map';
-common.cache = true;
 
 module.exports = common;
