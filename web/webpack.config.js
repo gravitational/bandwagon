@@ -5,10 +5,7 @@ var CleanWebPackPlugin = require('clean-webpack-plugin');
 var outputPath = path.join(__dirname, '/dist/');
 
 var common = {
-  /*
-  * note that the key name of the 'entry' resolves to file name (output)
-  * app.js, vendor.js, etc
-  **/
+
   entry: {
 
     // entry point to main app
@@ -18,19 +15,11 @@ var common = {
   },
 
   output: {
-    // used by loaders to generate various URLs within CSS, JS based off publicPath
-    //publicPath: '/',
-    //
-    path: outputPath,
 
-    /*
-    * format of the output file names. [name] stands for 'entry' keys
-    * defined in the 'entry' section
-    **/
+    path: outputPath,
 
     filename: '[name].[hash].js',
 
-    // chunk file name format
     chunkFilename: '[name].[chunkhash].js'
   },
 

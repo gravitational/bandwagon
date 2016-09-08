@@ -1,22 +1,24 @@
-# ENV environment variable defaults to 'staging', but can be set to 'production',
-# for example:
-#   > ENV=production make push
 TAG=1.0.0
 NOROOT=-u $$(id -u):$$(id -g)
-ENV?=staging
+
+CONTAINER_DIR=/app/dist
+HOST_DIR=src/dist
+DOCKERFLAGS=--rm=true $(NOROOT) -v "$$(pwd)/dist":$(CONTAINER_DIR) -t bandwagon:$(TAG)
 
 ##############################
 #   Docker Targets
 ##############################
 
 #
-# Builds the website Docker container (to be deployed later)
+# Builds dist files
 #
 .PHONY:docker-build
 docker-build:
 	docker build --build-arg UID=$$(id -u) --build-arg GID=$$(id -g) --force-rm=true -t bandwagon:$(TAG) .
-	mkdir -p dist
-	docker cp bandwagon:$(TAG):/app/dist/. dist
+	docker run $(DOCKERFLAGS) npm run build
+
+# docker run -v dist:/app/mama -other -options bandwagon:1.0.0 cp dist mama
+# run  -v dist:/app/mama  bandwagon:1.0.0 cp -r /app/dist/. /app/mama
 
 #
 # Removes the local Docker container
@@ -32,11 +34,9 @@ docker-clean:
 docker-enter:
 	docker run -ti -p 3000:3000 --rm=true $(NOROOT) -t bandwagon:$(TAG) /bin/bash
 
-
 ##############################
 #   Native Localhost
 ##############################
-
 
 #
 # 'make run' starts a local debugging environment (if this fails, run 'make build' first)

@@ -12,7 +12,7 @@
   "license": "",
   "dependencies": {
     "bootstrap-sass": "3.3.6",
-    "react": "0.14.8",    
+    "react": "0.14.8",
     "react-hot-loader": "^1.3.0",
     "react-dom": "0.14.8",
     "babel-core": "^6.7.2",
@@ -31,12 +31,12 @@
     "sass-loader": "^2.0.1",
     "css-loader": "^0.18.0",
     "style-loader": "^0.12.3",
-    "url-loader": "^0.5.7",
-    "serve-static": "^1.3.2",
-    "body-parser": "^1.9.0",
-    "express": "4.x"
+    "url-loader": "^0.5.7"
   },
   "devDependencies": {
+    "serve-static": "^1.3.2",
+    "body-parser": "^1.9.0",
+    "express": "4.x",
     "source-map-loader": "^0.1.5",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-dev-server": "^1.10.1"
