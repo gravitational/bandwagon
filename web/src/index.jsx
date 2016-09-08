@@ -1,5 +1,5 @@
-var React = require('react');
-var render = require('react-dom').render;
-var App = require('./components/app.jsx');
+import React from 'react';
+import { render } from 'react-dom';
+import App from './components/app.jsx';
 
 render(( <App/> ), document.body);

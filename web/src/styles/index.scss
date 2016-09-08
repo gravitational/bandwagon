@@ -1,5 +1,9 @@
+$fa-font-path: "~font-awesome/fonts";
+
 @import "bootstrap/index.scss";
 @import "inspinia/index.scss";
+@import "~font-awesome/scss/font-awesome";
+@import "inputs.scss";
 
 body{
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -9,15 +13,31 @@ body{
   overflow-x: hidden;
 }
 
-.my-installer-header{
-  height: 80px;
+.my-page{
+  max-width: 1024px;
+
+  dt{
+    width: auto;
+  }
+
+  dd{
+    margin-left: 100px;
+  }
+
+}
+
+.my-page-section{
+  margin: 35px auto;
+  max-width: 500px;
+}
+
+.my-page-header{
   min-width: 300px;
-  display: flex;
-  flex-wrap: wrap;
+  margin: 50px auto;
 }
 
 .my-installer-content{
-  padding-right: 35px;
+  padding-right: 45px;
   margin-top: 55px
 }
 

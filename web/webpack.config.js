@@ -28,7 +28,7 @@ var common = {
       {
         // copies fonts to the /assets/fonts folder if used in css (url)
         test: /fonts\/(.)+\.(woff|woff2|ttf|eot|svg)/,
-        loader: "url-loader?limit=10000&name=/assets/fonts/[name].[ext]"
+        loader: "url-loader?limit=10000&name=/fonts/[name].[ext]"
       },
       {
         // js loader
