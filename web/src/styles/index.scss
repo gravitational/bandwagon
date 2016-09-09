@@ -11,6 +11,10 @@ body{
   font-size: 13px;
   color: #676a6c;
   overflow-x: hidden;
+
+  h2{
+    font-weight: 500;
+  }
 }
 
 .my-page{
@@ -23,7 +27,22 @@ body{
   dd{
     margin-left: 100px;
   }
+}
 
+.my-page-indicator{
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.my-page-indicator-error{
+  margin-top: 10%;
+  text-align: center;
+
+  .fa{
+    font-size: 60px;
+  }
 }
 
 .my-page-section{

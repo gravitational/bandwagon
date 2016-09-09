@@ -2,4 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from './components/app.jsx';
 
-render(( <App/> ), document.body);
+let element = document.createElement('div');
+
+render(( <App/> ), document.body.appendChild(element));

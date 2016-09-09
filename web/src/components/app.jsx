@@ -2,58 +2,88 @@ import React from 'react';
 import UserSection from './sections/user.jsx';
 import RemoteAssistanceSection from './sections/remoteAssistance.jsx';
 import EndPoints from './sections/endpoints.jsx';
+import apiUtils from './../utils/apiUtils';
+import { PageIndicator } from './items.jsx';
 
 const App = React.createClass({
 
   getInitialState() {
     return {
-      isProcessing: true
+      isError: false,
+      isLoading: true,
+      isProcessing: false
     }
   },
 
-  onFinish(){
-    this.refs.userSections.isValid();
+  componentDidMount(){
+    apiUtils.init()
+      .done(this.makeReady)
+      .fail(this.makeFailed);
+  },
+
+  makeReady(){
+    this.setState({isLoading: false})
+  },
+
+  makeFailed(){
+    this.setState({isError: true})
+  },
+
+  makeProcessing(){
+    this.setState({isProcessing: true});
+  },
+
+  onFinish(e){
+    e.preventDefault();
+    this.refs.userSections.isValid()
+    this.makeProcessing();
   },
 
   render() {
-    let { isProcessing } = this.state;    
+    let { isProcessing, isLoading, isError } = this.state;
+
+    let btnClass = `btn btn-primary block ${isProcessing ? "disabled" : ""}`;
+
     return (
       <div className="my-page container">
-        <div className="my-page-header text-center">
-          <div className="text-center">
-            <h1>Congratulations, you are almost there!</h1>
+        <PageIndicator isLoading={isLoading} isError={isError}>
+          <div className="my-page-header text-center">
+            <div className="text-center">
+              <h1>Congratulations, you are almost there!</h1>
+            </div>
           </div>
-        </div>
-        <div className="my-page-section">
-          <EndPoints/>
-        </div>
-        <div className="my-page-section">
-          <UserSection ref="userSections"/>
-        </div>
-        <div className="my-page-section">
-          <RemoteAssistanceSection/>
-        </div>
-        <div className="my-page-section">
-          <div className="text-center">
-            <button
-              href="#"
-              onClick={this.onFinish}
-              style={{width: "150px", margin: '0 auto'}}
-              className="btn btn-primary block disabled">
-              {
-                isProcessing ?
-                  <i className="fa fa-cog fa-spin fa-lg"></i>
-                  : <span>Finish</span>
-                }
-            </button>
+          <div className="my-page-section">
+            <EndPoints/>
           </div>
-        </div>
+          <div className="my-page-section">
+            <UserSection ref="userSections"/>
+          </div>
+          <div className="my-page-section">
+            <RemoteAssistanceSection/>
+          </div>
+          <div className="my-page-section">
+            <div className="text-center">
+              <a
+                onClick={this.onFinish}
+                style={{width: "150px", margin: '0 auto'}}
+                className={btnClass}>
+                {
+                  isProcessing ?
+                    <i className="fa fa-cog fa-spin fa-lg"></i>
+                    : <span>Finish</span>
+                  }
+              </a>
+            </div>
+          </div>
+        </PageIndicator>
       </div>
     );
   }
 })
 
 /*
+
+
 
 <div className="m-l-sm">
   <dl className="dl-horizontal">
