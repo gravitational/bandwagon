@@ -2,8 +2,8 @@ TAG=1.0.0
 NOROOT=-u $$(id -u):$$(id -g)
 
 CONTAINER_DIR=/app/dist
-HOST_DIR=src/dist
-DOCKERFLAGS=--rm=true $(NOROOT) -v "$$(pwd)/dist":$(CONTAINER_DIR) -t bandwagon:$(TAG)
+HOST_DIR="$$(pwd)/dist"
+DOCKERFLAGS=--rm=true $(NOROOT) -v $(HOST_DIR):$(CONTAINER_DIR) -t bandwagon:$(TAG)
 
 ##############################
 #   Docker Targets
@@ -14,11 +14,9 @@ DOCKERFLAGS=--rm=true $(NOROOT) -v "$$(pwd)/dist":$(CONTAINER_DIR) -t bandwagon:
 #
 .PHONY:docker-build
 docker-build:
+	mkdir -p $(HOST_DIR)
 	docker build --build-arg UID=$$(id -u) --build-arg GID=$$(id -g) --force-rm=true -t bandwagon:$(TAG) .
 	docker run $(DOCKERFLAGS) npm run build
-
-# docker run -v dist:/app/mama -other -options bandwagon:1.0.0 cp dist mama
-# run  -v dist:/app/mama  bandwagon:1.0.0 cp -r /app/dist/. /app/mama
 
 #
 # Removes the local Docker container

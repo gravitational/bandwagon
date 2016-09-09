@@ -1,8 +1,8 @@
 var path = require('path');
 var HtmlWebPackPlugin = require('html-webpack-plugin');
-var CleanWebPackPlugin = require('clean-webpack-plugin');
 
 var outputPath = path.join(__dirname, '/dist/');
+var favIconPath = path.join(__dirname, '/src/imgs/favicon.ico');
 
 var common = {
 
@@ -56,16 +56,11 @@ var common = {
     ]
   },
   plugins:  [
-    new CleanWebPackPlugin([outputPath],{
-        dry: false
-    }),
     new HtmlWebPackPlugin({
-      inject: true,
-      title: 'Gravitational Installer Extenension App'
+      favicon: favIconPath,
+      inject: true
     })
  ]
 };
-
-common.devtool = 'source-map';
 
 module.exports = common;

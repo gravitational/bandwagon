@@ -12,6 +12,7 @@ var PROXY_TARGET = 'localhost:3000';
 var WEBPACK_CLIENT_ENTRY = 'webpack-dev-server/client?https://0.0.0.0:' + PORT;
 var WEBPACK_SRV_ENTRY = 'webpack/hot/dev-server';
 
+webpackConfig.devtool = 'source-map';
 webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 webpackConfig.entry.app.unshift(WEBPACK_CLIENT_ENTRY, WEBPACK_SRV_ENTRY);
 webpackConfig.entry.styles.unshift(WEBPACK_CLIENT_ENTRY, WEBPACK_SRV_ENTRY);
