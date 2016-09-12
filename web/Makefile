@@ -3,7 +3,7 @@ NOROOT=-u $$(id -u):$$(id -g)
 
 CONTAINER_DIR=/app/dist
 HOST_DIR="$$(pwd)/dist"
-DOCKERFLAGS=--rm=true $(NOROOT) -v $(HOST_DIR):$(CONTAINER_DIR) -t bandwagon:$(TAG)
+DOCKERFLAGS=--rm=true $(NOROOT) -v $(HOST_DIR):$(CONTAINER_DIR) -t bandwagon-web:$(TAG)
 
 ##############################
 #   Docker Targets
@@ -15,7 +15,7 @@ DOCKERFLAGS=--rm=true $(NOROOT) -v $(HOST_DIR):$(CONTAINER_DIR) -t bandwagon:$(T
 .PHONY:docker-build
 docker-build:
 	mkdir -p $(HOST_DIR)
-	docker build --build-arg UID=$$(id -u) --build-arg GID=$$(id -g) --force-rm=true -t bandwagon:$(TAG) .
+	docker build --build-arg UID=$$(id -u) --build-arg GID=$$(id -g) --force-rm=true -t bandwagon-web:$(TAG) .
 	docker run $(DOCKERFLAGS) npm run build
 
 #
@@ -23,14 +23,14 @@ docker-build:
 #
 .PHONY: docker-clean
 docker-clean:
-	docker rmi bandwagon:$(TAG)
+	docker rmi bandwagon-web:$(TAG)
 
 #
 # 'make docker-enter' builds a Docker container with a website
 #
 .PHONY:docker-enter
 docker-enter:
-	docker run -ti -p 3000:3000 --rm=true $(NOROOT) -t bandwagon:$(TAG) /bin/bash
+	docker run -ti -p 3000:3000 --rm=true $(NOROOT) -t bandwagon-web:$(TAG) /bin/bash
 
 ##############################
 #   Native Localhost
