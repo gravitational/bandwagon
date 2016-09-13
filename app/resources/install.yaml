@@ -22,7 +22,22 @@ metadata:
 spec:
   containers:
     - name: bandwagon
-      image: bandwagon:1.0.0
+      image: apiserver:5000/bandwagon:1.0.0
       imagePullPolicy: Always
       ports:
         - containerPort: 8000
+      env:
+        - name: PATH
+          value: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin"
+      volumeMounts:
+        - name: bin
+          mountPath: /opt/bin
+        - name: gravity
+          mountPath: /var/lib/gravity/local
+  volumes:
+    - name: bin
+      hostPath:
+        path: /usr/bin
+    - name: gravity
+      hostPath:
+        path: /var/lib/gravity/local

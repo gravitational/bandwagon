@@ -16,6 +16,12 @@ build: web-build go-build
 	docker build -t $(NAME):$(VER) .
 
 
+.PHONY: push
+push:
+	docker tag $(NAME):$(VER) apiserver:5000/$(NAME):$(VER)
+	docker push apiserver:5000/$(NAME):$(VER)
+
+
 .PHONY: run
 run: build
 	docker run -p 8000:8000 $(NAME):$(VER)
