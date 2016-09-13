@@ -9,6 +9,7 @@ BUILD_DIR := $(CURRENT_DIR)/build
 WEB_APP_DIR := $(CURRENT_DIR)/web
 
 BUILDBOX_IMAGE := gravity-buildbox:latest
+BUILDBOX_DIR := /gopath/src/github.com/gravitational/$(NAME)
 
 
 .PHONY: all
@@ -22,8 +23,8 @@ build: web-build go-build
 
 .PHONY: push
 push:
-	docker tag $(NAME):$(VER) apiserver:5000/$(NAME):$(VER)
-	docker push apiserver:5000/$(NAME):$(VER)
+	docker tag $(NAME):$(VER) apiserver:5000/$(NAME):$(VER) && \
+		docker push apiserver:5000/$(NAME):$(VER)
 
 
 .PHONY: run
@@ -34,7 +35,7 @@ run: build
 .PHONY: import
 import: build
 	$(GRAVITY) --insecure app delete $(PACKAGE) --force --ops-url=$(OPS_URL) && \
-	$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL)
+		$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL)
 
 
 .PHONY: web-build
@@ -43,21 +44,13 @@ web-build:
 
 
 .PHONY: go-build
-go-build: $(BUILD_DIR)/$(NAME)
-
-
-$(BUILD_DIR)/$(NAME):
-	docker run -i --rm=true -v $(CURRENT_DIR):/gopath/src/github.com/gravitational/$(NAME) $(BUILDBOX_IMAGE) \
-		/bin/bash -c "make -C /gopath/src/github.com/gravitational/$(NAME) go-build-in-buildbox"
+go-build:
+	docker run -i --rm=true -v $(CURRENT_DIR):$(BUILDBOX_DIR) \
+		$(BUILDBOX_IMAGE) /bin/bash -c "make -C $(BUILDBOX_DIR) go-build-in-buildbox"
 
 
 .PHONY: go-build-in-buildbox
 go-build-in-buildbox:
-	cd /gopath/src/github.com/gravitational/$(NAME) && \
-	go get && \
-	go build -o ./build/$(NAME)
-
-
-.PHONY: clean
-clean:
-	rm -rf $(BUILD_DIR)
+	cd $(BUILDBOX_DIR) && \
+		go get -v && \
+		go build -o ./build/$(NAME)
