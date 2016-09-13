@@ -1,10 +1,14 @@
 VER := 1.0.0
 NAME := bandwagon
 PACKAGE := gravitational.io/$(NAME):$(VER)
-BUILD_DIR := ./build
 OPS_URL ?= https://opscenter.localhost.localdomain:33009
 GRAVITY ?= gravity
-WEB_APP_DIR := ./web
+
+CURRENT_DIR := $(shell pwd)
+BUILD_DIR := $(CURRENT_DIR)/build
+WEB_APP_DIR := $(CURRENT_DIR)/web
+
+BUILDBOX_IMAGE := gravity-buildbox:latest
 
 
 .PHONY: all
@@ -39,5 +43,21 @@ web-build:
 
 
 .PHONY: go-build
-go-build:
-	go build -o $(BUILD_DIR)/$(NAME)
+go-build: $(BUILD_DIR)/$(NAME)
+
+
+$(BUILD_DIR)/$(NAME):
+	docker run -i --rm=true -v $(CURRENT_DIR):/gopath/src/github.com/gravitational/$(NAME) $(BUILDBOX_IMAGE) \
+		/bin/bash -c "make -C /gopath/src/github.com/gravitational/$(NAME) go-build-in-buildbox"
+
+
+.PHONY: go-build-in-buildbox
+go-build-in-buildbox:
+	cd /gopath/src/github.com/gravitational/$(NAME) && \
+	go get && \
+	go build -o ./build/$(NAME)
+
+
+.PHONY: clean
+clean:
+	rm -rf $(BUILD_DIR)
