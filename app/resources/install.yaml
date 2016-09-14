@@ -22,8 +22,7 @@ metadata:
 spec:
   containers:
     - name: bandwagon
-      image: apiserver:5000/bandwagon:1.0.0
-      imagePullPolicy: Always
+      image: bandwagon:1.0.0
       ports:
         - containerPort: 8000
       env:
