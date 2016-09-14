@@ -29,7 +29,7 @@ func replyString(w http.ResponseWriter, data string) {
 
 // replyError responds with the provided error message.
 func replyError(w http.ResponseWriter, message string) {
-	err := map[string]string{"error": message}
+	err := map[string]string{"message": message}
 	bytes, _ := json.Marshal(err)
 	w.Header().Set("Content-Type", "application/json")
 	http.Error(w, string(bytes), http.StatusInternalServerError)

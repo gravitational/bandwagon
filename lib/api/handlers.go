@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/gravitational/bandwagon/lib/gravity"
+	"github.com/gravitational/trace"
 )
 
 // SetupHandlers configures API handlers.
@@ -72,7 +73,7 @@ func completeHandler(w http.ResponseWriter, r *http.Request) {
 	log.Infof("request: %v", req)
 
 	err = gravity.CreateUser(req.Email, req.Password)
-	if err != nil {
+	if err != nil && !trace.IsAlreadyExists(err) {
 		replyError(w, err.Error())
 		return
 	}
