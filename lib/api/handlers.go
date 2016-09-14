@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	log "github.com/Sirupsen/logrus"
 	"github.com/gorilla/mux"
 
 	"github.com/gravitational/bandwagon/lib/gravity"
@@ -70,7 +69,6 @@ func completeHandler(w http.ResponseWriter, r *http.Request) {
 		replyError(w, err.Error())
 		return
 	}
-	log.Infof("request: %v", req)
 
 	err = gravity.CreateUser(req.Email, req.Password)
 	if err != nil && !trace.IsAlreadyExists(err) {
