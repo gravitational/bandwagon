@@ -8,7 +8,7 @@ var PORT = '3001';
 var PROXY_TARGET = 'portal.gravitational.io';
 
 var DIST_PATH = __dirname + "//dist";
-var INDEX_HTML_PATH = __dirname + "//dist";
+var INDEX_HTML_PATH = DIST_PATH;
 var WEBPACK_CLIENT_ENTRY = 'webpack-dev-server/client?https://0.0.0.0:' + PORT;
 var WEBPACK_SRV_ENTRY = 'webpack/hot/dev-server';
 
@@ -28,12 +28,13 @@ function getTargetOptions(suffix) {
 }
 
 var compiler = webpack(webpackConfig);
+var proxy = {};
+
+proxy[APP_PATH+'/api/*'] = getTargetOptions();
+proxy['/web/portal*'] = getTargetOptions();
 
 var server = new WebpackDevServer(compiler, {
-  proxy: {
-    '/api/*': getTargetOptions(APP_PATH),
-    '*': getTargetOptions()
-  },
+  proxy: proxy,
   publicPath: APP_PATH,
   hot: true,
   https: true,
@@ -48,5 +49,5 @@ server.app.get(APP_PATH+'/*', function (req, res) {
 });
 
 server.listen(PORT, "0.0.0.0", function() {
-  console.log('Dev Server is up and running: https://location:' + PORT);
+  console.log('Dev Server is up and running: https://localhost:' + PORT);
 });
