@@ -30,7 +30,7 @@ const EndPoints = React.createClass({
   },
 
   render() {
-    let { data, appName } = this.props;
+    let { data } = this.props;
 
     if(data.length === 0){
       return null;
@@ -40,7 +40,7 @@ const EndPoints = React.createClass({
 
     return (
       <div className="my-page-section-endpoints">
-        <h3 className="m-b m-t">{appName} endpoints</h3>
+        <h3 className="m-b m-t">Application endpoints</h3>
         {$endpoints}
       </div>
     );

@@ -9,8 +9,8 @@ const App = React.createClass({
 
   getInitialState() {
     return {
-      appName: 'Application',
-      endpoints: null,
+      application: {},
+      endpoints: [],
       errorMessage: 'Error',
       isLoading: true,
       isLoadingError: false,
@@ -41,9 +41,10 @@ const App = React.createClass({
     window.location.reload();
   },
 
-  handleSubmitError(){
+  handleSubmitError(err){
+    let errorMessage = err.responseJSON ? err.responseJSON.message : 'Unknown error';
     this.setState({
-      errorMessage: 'Error',
+      errorMessage,
       isSubmitting: false,
       isSubmittingError: true})
   },
@@ -81,22 +82,26 @@ const App = React.createClass({
       isLoadingError,
       isLoading,
       endpoints,
-      appName
+      application
     } = this.state;
 
     let btnClass = `btn btn-primary block my-page-btn-submit ${isSubmitting ? "disabled" : ""}`;
-    let $errorMsg =  isSubmittingError ? <label className="error">{errorMessage}</label> : null;
+    let $errorMsg = isSubmittingError ? <label className="error">{errorMessage}</label> : null;
 
     return (
       <div className="my-page container">
         <PageIndicator isLoading={isLoading} isError={isLoadingError}>
           <div className="my-page-header text-center">
             <div className="text-center">
-              <h1>Congratulations, you are almost there!</h1>
+              <h2>Congratulations!</h2>
+              <h2 className="m-t-sm">You have successfully installed</h2>
+              <h2 className="m-t-sm">
+                the <span className="bg-info p-w-xs">{application.name}</span> <small>ver.{application.version}</small>
+              </h2>
             </div>
           </div>
           <div className="my-page-section">
-            <EndPoints appName={appName} data={endpoints}/>
+            <EndPoints app={application} data={endpoints}/>
           </div>
           <div className="my-page-section">
             <UserSection ref="userSection"/>
