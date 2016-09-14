@@ -37,7 +37,7 @@ body{
 }
 
 .my-page-indicator-error{
-  margin-top: 10%;
+  margin-top: 45px;
   text-align: center;
 
   .fa{
@@ -46,7 +46,7 @@ body{
 }
 
 .my-page-section{
-  margin: 35px auto;
+  margin: 60px auto;
   max-width: 500px;
 }
 
@@ -55,11 +55,13 @@ body{
   margin: 50px auto;
 }
 
-.my-installer-content{
-  padding-right: 45px;
-  margin-top: 55px
+.my-page-section-endpoints{
+  a {
+    word-break: break-all;
+  }
 }
 
-.my-installer-hints{
-  margin-top: 120px;
+.my-page-btn-submit{
+  width: 150px;
+  margin: 5px auto;
 }

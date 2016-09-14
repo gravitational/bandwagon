@@ -1,21 +1,13 @@
 import $ from "jquery"
 import 'jquery-validation';
 import React from 'react';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 const UserSection = React.createClass({
 
-  mixins: [LinkedStateMixin],
-
-  getInitialState() {
-    return {
-      psw: '',
-      pswConfirmed: ''
-    }
-  },
-
-  getPassword(){
-    return this.state.psw;
+  getData(){
+    let password = this.refs.password.value;
+    let email = this.refs.email.value;
+    return { password, email };
   },
 
   isValid(){
@@ -52,18 +44,16 @@ const UserSection = React.createClass({
           <form ref="form">
             <div className="m-l-sm">
               <div className="form-group">
-                <label>User Name</label>
                 <input
-                  disabled
-                  value="admin"
+                  autoFocus
+                  type="email"
                   name="email"
+                  ref="email"
                   className="form-control required"
                   placeholder="Email"/>
               </div>
               <div className="form-group">
-                <label>Password</label>
                 <input
-                  autoFocus
                   ref="password"
                   type="password"
                   name="password"
@@ -71,12 +61,11 @@ const UserSection = React.createClass({
                   placeholder="Password" />
               </div>
               <div className="form-group">
-                <label>Confirm Password</label>
                 <input
                   type="password"
                   name="passwordConfirmed"
                   className="form-control"
-                  placeholder="Password confirm"/>
+                  placeholder="Re-enter password"/>
               </div>
             </div>
           </form>

@@ -3,12 +3,12 @@ var webpackConfig = require('./webpack.config.js');
 var express = require('express');
 var webpack = require('webpack');
 
-var ROOT = '/';
+var APP_PATH = '/web/site/k8s.100/complete';
 var PORT = '3001';
+var PROXY_TARGET = 'portal.gravitational.io';
+
 var DIST_PATH = __dirname + "//dist";
 var INDEX_HTML_PATH = __dirname + "//dist";
-
-var PROXY_TARGET = 'localhost:3000';
 var WEBPACK_CLIENT_ENTRY = 'webpack-dev-server/client?https://0.0.0.0:' + PORT;
 var WEBPACK_SRV_ENTRY = 'webpack/hot/dev-server';
 
@@ -16,10 +16,12 @@ webpackConfig.devtool = 'source-map';
 webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 webpackConfig.entry.app.unshift(WEBPACK_CLIENT_ENTRY, WEBPACK_SRV_ENTRY);
 webpackConfig.entry.styles.unshift(WEBPACK_CLIENT_ENTRY, WEBPACK_SRV_ENTRY);
+webpackConfig.output.publicPath = APP_PATH;
 
-function getTargetOptions() {
+function getTargetOptions(suffix) {
+  suffix = suffix || '';
   return {
-    target: "https://"+PROXY_TARGET,
+    target: "https://"+PROXY_TARGET + suffix,
     secure: false,
     changeOrigin: true
   }
@@ -28,10 +30,11 @@ function getTargetOptions() {
 var compiler = webpack(webpackConfig);
 
 var server = new WebpackDevServer(compiler, {
-  proxy:{
-    '/api/*': getTargetOptions()
+  proxy: {
+    '/api/*': getTargetOptions(APP_PATH),
+    '*': getTargetOptions()
   },
-  publicPath: ROOT,
+  publicPath: APP_PATH,
   hot: true,
   https: true,
   inline: true,
@@ -39,9 +42,9 @@ var server = new WebpackDevServer(compiler, {
   stats: 'errors-only'
 });
 
-server.app.use(ROOT, express.static(DIST_PATH));
-server.app.get(ROOT +'/*', function (req, res) {
-    res.sendfile(INDEX_HTML_PATH);
+server.app.use(APP_PATH, express.static(DIST_PATH));
+server.app.get(APP_PATH+'/*', function (req, res) {
+  res.sendfile(INDEX_HTML_PATH);
 });
 
 server.listen(PORT, "0.0.0.0", function() {

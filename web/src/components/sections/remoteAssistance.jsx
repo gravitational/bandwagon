@@ -1,51 +1,62 @@
 import React from 'react';
 
+const enabled = '0'
+
+const options = [
+  {
+    value: enabled,
+    title: 'Enable remote assistance to allow vendor team to support your infrastructure.'
+  }, {
+    value: '1',
+    title: 'Disable remote assistance to turn off remote access to your infrastructure for vendor support team.'
+  }
+]
+
 const RemoteAssistance = React.createClass({
 
-  onChangeRemoteAssitance(){
+  isEnabled() {
+    return this.state.value === enabled;
+  },
+
+  getInitialState(){
+    return {
+      value: enabled
+    }
+  },
+
+  onChangeRemoteAssitance(value) {
+    this.setState({
+      value
+    })
   },
 
   render() {
-    let value = 0;
-    let options =  [
-        {
-          value: 0,
-          title: 'Enable remote assistance to allow vendor team to support your infrastructure.'
-        },
-
-        {
-          value: 1,
-          title: 'Disable remote assistance to turn off remote access to your infrastructure for vendor support team.'
-        }
-      ]
-
     return (
       <div>
         <h3>Remote Assistance</h3>
         <div className="m-l-md m-t">
-          <RadioGroup options={options} value={value} onChange={this.onChangeRemoteAssitance}/>
+          <RadioGroup options={options} value={this.state.value} onChange={this.onChangeRemoteAssitance}/>
         </div>
       </div>
     );
   }
 })
 
-
 const RadioGroup = React.createClass({
 
   propTypes: {
-   options: React.PropTypes.array.isRequired,
-   value: React.PropTypes.string
+    options: React.PropTypes.array.isRequired,
+    value: React.PropTypes.string
   },
 
-  getInitialState(){
+  getInitialState() {
     let currentValue = this.props.value;
     return {currentValue};
   },
 
-  onChange(option){
+  onChange(option) {
     this.props.onChange(option.value);
-    this.setState({currentValue: option.value });
+    this.setState({currentValue: option.value});
   },
 
   render() {
@@ -57,9 +68,7 @@ const RadioGroup = React.createClass({
       return (
         <label key={index} className="grv-control-radio">
           <span>{title}</span>
-          <input type="radio" name="radio"
-            onChange={this.onChange.bind(this, option)}
-            checked={value === currentValue}/>
+          <input type="radio" name="radio" onChange={this.onChange.bind(this, option)} checked={value === currentValue}/>
           <div className="grv-control-radio-indicator"></div>
         </label>
       )

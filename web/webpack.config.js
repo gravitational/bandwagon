@@ -7,14 +7,13 @@ var favIconPath = path.join(__dirname, '/src/imgs/favicon.ico');
 var common = {
 
   entry: {
-
-    // entry point to main app
     app: ['./src/index.jsx'],
-
     styles: ['./src/styles/index.scss']
   },
 
   output: {
+
+    publicPath: '/',
 
     path: outputPath,
 
@@ -31,7 +30,6 @@ var common = {
         loader: "url-loader?limit=10000&name=/fonts/[name].[ext]"
       },
       {
-        // js loader
         include: path.join(__dirname, 'src'),
         test: /(\.js)|(\.jsx)$/,
         exclude: /node_modules/,
@@ -47,9 +45,6 @@ var common = {
         loader: "file-loader?name=/assets/img/img-[hash:6].[ext]"
       },
       {
-        /*
-        * loads CSS for the rest of the app by ignores vendor folder.
-        **/
         test: /\.scss$/,
         loader: 'style!css!sass?outputStyle=expanded'
       }
@@ -57,6 +52,7 @@ var common = {
   },
   plugins:  [
     new HtmlWebPackPlugin({
+      title: 'Final step',
       favicon: favIconPath,
       inject: true
     })
