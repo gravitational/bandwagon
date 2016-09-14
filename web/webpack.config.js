@@ -13,7 +13,7 @@ var common = {
 
   output: {
 
-    publicPath: '/',
+    publicPath: '',
 
     path: outputPath,
 

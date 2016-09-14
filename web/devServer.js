@@ -31,7 +31,7 @@ var compiler = webpack(webpackConfig);
 var proxy = {};
 
 proxy[APP_PATH+'/api/*'] = getTargetOptions();
-proxy['/web/portal*'] = getTargetOptions();
+proxy['*'] = getTargetOptions();
 
 var server = new WebpackDevServer(compiler, {
   proxy: proxy,
