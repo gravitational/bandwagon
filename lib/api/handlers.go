@@ -76,13 +76,7 @@ func completeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = gravity.SetRemoteSupport(req.Support)
-	if err != nil {
-		replyError(w, err.Error())
-		return
-	}
-
-	err = gravity.CompleteInstall()
+	err = gravity.CompleteInstall(req.Support)
 	if err != nil {
 		replyError(w, err.Error())
 		return

@@ -20,28 +20,17 @@ func CreateUser(email, password string) error {
 	return trace.Wrap(err)
 }
 
-// SetRemoteSupport enables/disables remote support with Gravitational OpsCenter.
-func SetRemoteSupport(on bool) error {
+// CompleteInstall marks the site installation step as complete.
+func CompleteInstall(support bool) error {
 	siteName, err := GetLocalSite()
 	if err != nil {
 		return trace.Wrap(err)
 	}
 	action := "on"
-	if !on {
+	if !support {
 		action = "off"
 	}
-	out, err := gravityCommand("site", "support", siteName, action)
-	log.Infof("set remote support output: %s", string(out))
-	return trace.Wrap(err)
-}
-
-// CompleteInstall marks the site installation step as complete.
-func CompleteInstall() error {
-	siteName, err := GetLocalSite()
-	if err != nil {
-		return trace.Wrap(err)
-	}
-	out, err := gravityCommand("site", "complete", siteName)
+	out, err := gravityCommand("site", "complete", siteName, fmt.Sprintf("--support=%v", action))
 	log.Infof("complete install output: %s", string(out))
 	return trace.Wrap(err)
 }
