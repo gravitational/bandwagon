@@ -1,4 +1,4 @@
-VER := 1.0.0
+VER := 1.0.3
 NAME := bandwagon
 PACKAGE := gravitational.io/$(NAME):$(VER)
 OPS_URL ?= https://opscenter.localhost.localdomain:33009

@@ -4,7 +4,7 @@ metadata:
   name: bandwagon
   namespace: kube-system
   repository: gravitational.io
-  resourceVersion: 1.0.0
+  resourceVersion: 1.0.3
 hooks:
   install:
     spec:

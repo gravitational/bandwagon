@@ -22,7 +22,7 @@ metadata:
 spec:
   containers:
     - name: bandwagon
-      image: bandwagon:1.0.0
+      image: bandwagon:1.0.3
       ports:
         - containerPort: 8000
       env:
