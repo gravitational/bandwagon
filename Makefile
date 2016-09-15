@@ -1,4 +1,4 @@
-VER := 1.0.3
+VER := 1.0.4
 NAME := bandwagon
 PACKAGE := gravitational.io/$(NAME):$(VER)
 OPS_URL ?= https://opscenter.localhost.localdomain:33009
@@ -45,6 +45,7 @@ web-build:
 
 .PHONY: go-build
 go-build:
+	mkdir -p build
 	docker run -i --rm=true -v $(CURRENT_DIR):$(BUILDBOX_DIR) \
 		$(BUILDBOX_IMAGE) /bin/bash -c "make -C $(BUILDBOX_DIR) go-build-in-buildbox"
 
@@ -54,3 +55,8 @@ go-build-in-buildbox:
 	cd $(BUILDBOX_DIR) && \
 		go get -v && \
 		go build -o ./build/$(NAME)
+
+
+.PHONY: clean
+clean:
+	rm -rf build
