@@ -3,7 +3,7 @@ var webpackConfig = require('./webpack.config.js');
 var express = require('express');
 var webpack = require('webpack');
 
-var APP_PATH = '/web/site/k8s.100/complete';
+var APP_PATH = '/web/site/alexeyk-9-15-1/complete/';
 var PORT = '3001';
 var PROXY_TARGET = 'portal.gravitational.io';
 
@@ -31,7 +31,7 @@ var compiler = webpack(webpackConfig);
 var proxy = {};
 
 proxy[APP_PATH+'/api/*'] = getTargetOptions();
-proxy['*'] = getTargetOptions();
+proxy['/web/portal/*'] = getTargetOptions();
 
 var server = new WebpackDevServer(compiler, {
   proxy: proxy,

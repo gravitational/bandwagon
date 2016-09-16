@@ -19,14 +19,39 @@ body{
 
 .my-page{
   max-width: 1024px;
+}
 
-  dt{
-    width: auto;
+.my-page-header{
+  min-width: 300px;
+  margin: 50px auto;
+}
+
+.my-page-section{
+  margin: 40px auto;
+  max-width: 500px;
+}
+
+.my-page-section-endpoints{
+  a {
+    word-break: break-all;
   }
 
-  dd{
-    margin-left: 100px;
+  .my-page-section-endpoints-items{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: -15px;
   }
+
+  .my-page-section-endpoints-item{
+    margin-bottom: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+
+.my-page-btn-submit{
+  width: 150px;
+  margin: 5px auto;
 }
 
 .my-page-indicator{
@@ -43,25 +68,4 @@ body{
   .fa{
     font-size: 60px;
   }
-}
-
-.my-page-section{
-  margin: 60px auto;
-  max-width: 500px;
-}
-
-.my-page-header{
-  min-width: 300px;
-  margin: 50px auto;
-}
-
-.my-page-section-endpoints{
-  a {
-    word-break: break-all;
-  }
-}
-
-.my-page-btn-submit{
-  width: 150px;
-  margin: 5px auto;
 }

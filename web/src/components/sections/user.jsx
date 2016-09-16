@@ -1,4 +1,4 @@
-import $ from "jquery"
+import $ from 'jquery'
 import 'jquery-validation';
 import React from 'react';
 

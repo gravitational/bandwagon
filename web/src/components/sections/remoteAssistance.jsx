@@ -6,7 +6,8 @@ const options = [
   {
     value: enabled,
     title: 'Enable remote assistance to allow vendor team to support your infrastructure.'
-  }, {
+  },
+  {
     value: '1',
     title: 'Disable remote assistance to turn off remote access to your infrastructure for vendor support team.'
   }
@@ -35,7 +36,11 @@ const RemoteAssistance = React.createClass({
       <div>
         <h3>Remote Assistance</h3>
         <div className="m-l-md m-t">
-          <RadioGroup options={options} value={this.state.value} onChange={this.onChangeRemoteAssitance}/>
+          <RadioGroup
+            options={options}
+            value={this.state.value}
+            onChange={this.onChangeRemoteAssitance}
+          />
         </div>
       </div>
     );
@@ -60,16 +65,19 @@ const RadioGroup = React.createClass({
   },
 
   render() {
-    let {options} = this.props;
-    let {currentValue} = this.state;
+    let { options } = this.props;
+    let { currentValue } = this.state;
 
     let $options = options.map((option, index) => {
       let {value, title} = option;
       return (
         <label key={index} className="grv-control-radio">
           <span>{title}</span>
-          <input type="radio" name="radio" onChange={this.onChange.bind(this, option)} checked={value === currentValue}/>
-          <div className="grv-control-radio-indicator"></div>
+          <input type="radio" name="radio"
+            onChange={this.onChange.bind(this, option)}
+            checked={value === currentValue}
+          />
+          <div className="grv-control-radio-indicator" />
         </label>
       )
     });
