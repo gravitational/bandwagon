@@ -85,8 +85,19 @@ const App = React.createClass({
       application
     } = this.state;
 
+    let $errorMsg = null;
+    let $btnContent = <span>Finish</span>;
     let btnClass = `btn btn-primary block my-page-btn-submit ${isSubmitting ? "disabled" : ""}`;
-    let $errorMsg = isSubmittingError ? <label className="error">{errorMessage}</label> : null;
+
+    // show server error
+    if(isSubmittingError){
+      $errorMsg = <label className="error">{errorMessage}</label>
+    }
+
+    // show loading indicator inside the button
+    if(isSubmitting){
+      $btnContent = <i className="fa fa-cog fa-spin fa-lg" />
+    }
 
     return (
       <div className="my-page container">
@@ -111,14 +122,8 @@ const App = React.createClass({
           </div>
           <div className="my-page-section">
             <div className="text-center">
-              <a
-                onClick={this.onSubmit}
-                className={btnClass}>
-                {
-                  isSubmitting ?
-                    <i className="fa fa-cog fa-spin fa-lg"></i>
-                    : <span>Finish</span>
-                  }
+              <a onClick={this.onSubmit} className={btnClass}>
+                {$btnContent}
               </a>
               {$errorMsg}
             </div>
