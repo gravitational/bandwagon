@@ -1,0 +1,67 @@
+$fa-font-path: "~font-awesome/fonts";
+
+@import "bootstrap/index.scss";
+@import "inspinia/index.scss";
+@import "~font-awesome/scss/font-awesome";
+@import "inputs.scss";
+
+body{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color:initial;
+  font-size: 13px;
+  color: #676a6c;
+  overflow-x: hidden;
+
+  h1, h2, h3, h4{
+    font-weight: initial;
+  }
+}
+
+.my-page{
+  max-width: 1024px;
+
+  dt{
+    width: auto;
+  }
+
+  dd{
+    margin-left: 100px;
+  }
+}
+
+.my-page-indicator{
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.my-page-indicator-error{
+  margin-top: 45px;
+  text-align: center;
+
+  .fa{
+    font-size: 60px;
+  }
+}
+
+.my-page-section{
+  margin: 60px auto;
+  max-width: 500px;
+}
+
+.my-page-header{
+  min-width: 300px;
+  margin: 50px auto;
+}
+
+.my-page-section-endpoints{
+  a {
+    word-break: break-all;
+  }
+}
+
+.my-page-btn-submit{
+  width: 150px;
+  margin: 5px auto;
+}

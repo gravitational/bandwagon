@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bandwagon
+  namespace: kube-system
+  labels:
+    app: bandwagon
+spec:
+  selector:
+    app: bandwagon
+  ports:
+    - port: 80
+      targetPort: 8000
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bandwagon
+  namespace: kube-system
+  labels:
+    app: bandwagon
+spec:
+  containers:
+    - name: bandwagon
+      image: bandwagon:1.0.4
+      ports:
+        - containerPort: 8000
+      env:
+        - name: PATH
+          value: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin"
+      volumeMounts:
+        - name: bin
+          mountPath: /opt/bin
+        - name: gravity
+          mountPath: /var/lib/gravity/local
+  volumes:
+    - name: bin
+      hostPath:
+        path: /usr/bin
+    - name: gravity
+      hostPath:
+        path: /var/lib/gravity/local
