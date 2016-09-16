@@ -107,7 +107,7 @@ const App = React.createClass({
               <h2>Congratulations!</h2>
               <h2 className="m-t-sm">You have successfully installed</h2>
               <h2 className="m-t-sm">
-                the <span className="bg-info p-w-xs">{application.name}</span> <small>ver.{application.version}</small>
+                <span>{application.name}</span> <small>ver.{application.version}</small>
               </h2>
             </div>
           </div>
