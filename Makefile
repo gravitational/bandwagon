@@ -8,7 +8,7 @@ CURRENT_DIR := $(shell pwd)
 BUILD_DIR := $(CURRENT_DIR)/build
 WEB_APP_DIR := $(CURRENT_DIR)/web
 
-BUILDBOX_IMAGE := gravity-buildbox:latest
+BUILDBOX_IMAGE := quay.io/gravitational/debian-venti:go1.7-jessie
 BUILDBOX_DIR := /gopath/src/github.com/gravitational/$(NAME)
 
 
