@@ -2,10 +2,26 @@ var WebpackDevServer = require("webpack-dev-server");
 var webpackConfig = require('./webpack.config.js');
 var express = require('express');
 var webpack = require('webpack');
+var request = require('url');
 
-var APP_PATH = '/web/site/alexeyk-9-15-1/complete/';
-var PORT = '3001';
-var PROXY_TARGET = 'portal.gravitational.io';
+var argv = require('optimist')
+    .usage('Usage: $0 -proxy [url]')
+    .demand(['proxy'])
+    .argv;
+
+var urlObj =  request.parse(argv.proxy)
+
+console.log('Starting dev server pointing to: ' + urlObj.href);
+
+function getTargetHostName(urlObj){
+  var index = urlObj.href.indexOf(urlObj.path);
+  return urlObj.href.substring(0, index);
+}
+
+var APP_PATH = urlObj.path;
+var APP_API_PATH = APP_PATH + '/api';
+var PROXY_TARGET = getTargetHostName(urlObj);
+var PORT = 3001;
 
 var DIST_PATH = __dirname + "//dist";
 var INDEX_HTML_PATH = DIST_PATH;
@@ -18,23 +34,31 @@ webpackConfig.entry.app.unshift(WEBPACK_CLIENT_ENTRY, WEBPACK_SRV_ENTRY);
 webpackConfig.entry.styles.unshift(WEBPACK_CLIENT_ENTRY, WEBPACK_SRV_ENTRY);
 webpackConfig.output.publicPath = APP_PATH;
 
-function getTargetOptions(suffix) {
-  suffix = suffix || '';
+function getTargetOptions() {
   return {
-    target: "https://"+PROXY_TARGET + suffix,
+    target: PROXY_TARGET,
     secure: false,
-    changeOrigin: true
+    changeOrigin: true,
+    bypass: function(req) {
+      if (
+         // redirect all requests to static files to our middleware defined bellow.
+         // note that we only need it to avoid issues with font handling by react hot.
+         // http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts
+         req.originalUrl.indexOf(APP_PATH) !== -1  &&
+         req.originalUrl.indexOf(APP_API_PATH) === -1 ) {
+         console.log('Skipping proxy for browser request - ' + req.originalUrl);
+         return req.originalUrl;
+       }
+   }
   }
 }
 
 var compiler = webpack(webpackConfig);
-var proxy = {};
-
-proxy[APP_PATH+'/api/*'] = getTargetOptions();
-proxy['/web/portal/*'] = getTargetOptions();
 
 var server = new WebpackDevServer(compiler, {
-  proxy: proxy,
+  proxy: {
+    '*' : getTargetOptions()
+  },
   publicPath: APP_PATH,
   hot: true,
   https: true,
@@ -49,5 +73,5 @@ server.app.get(APP_PATH+'/*', function (req, res) {
 });
 
 server.listen(PORT, "0.0.0.0", function() {
-  console.log('Dev Server is up and running: https://localhost:' + PORT);
+  console.log('Dev Server is up and running: https://localhost:' + PORT + APP_PATH);
 });

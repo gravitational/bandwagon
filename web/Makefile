@@ -37,12 +37,6 @@ docker-enter:
 #   Native Localhost
 ##############################
 
-#
-# 'make run' starts a local debugging environment (if this fails, run 'make build' first)
-#
-.PHONY:run
-run:
-	npm run start
 
 #
 # 'make build' installs missing packages required for `make local` to run
@@ -50,6 +44,7 @@ run:
 .PHONY:build
 build:
 	npm install
+	npm run build
 
 #
 # Removes installed node modules
