@@ -16,3 +16,7 @@ RUN npm install --production ; npm cache clear
 VOLUME ["/app/dist"]
 
 COPY . /app
+
+RUN groupadd builder --gid=$GID  -o 
+RUN useradd builder --uid=$UID --gid=$GID --create-home --shell=/bin/bash 
+RUN chown builder /app -R

@@ -3,7 +3,7 @@ NOROOT=-u $$(id -u):$$(id -g)
 
 CONTAINER_DIR=/app/dist
 HOST_DIR="$$(pwd)/dist"
-DOCKERFLAGS=--rm=true $(NOROOT) -v $(HOST_DIR):$(CONTAINER_DIR) -t bandwagon-web:$(TAG)
+DOCKERFLAGS=--rm=true $(NOROOT) -h buildbox -v $(HOST_DIR):$(CONTAINER_DIR) -t bandwagon-web:$(TAG)
 
 ##############################
 #   Docker Targets
@@ -17,6 +17,7 @@ docker-build:
 	mkdir -p $(HOST_DIR)
 	docker build --build-arg UID=$$(id -u) --build-arg GID=$$(id -g) --force-rm=true -t bandwagon-web:$(TAG) .
 	docker run $(DOCKERFLAGS) npm run build
+	#docker run -ti $(DOCKERFLAGS) /bin/bash
 
 #
 # Removes the local Docker container
