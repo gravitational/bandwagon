@@ -11,7 +11,7 @@ import (
 
 // CreateUser creates a new admin user with the provided email and password.
 func CreateUser(email, password string) error {
-	out, err := gravityCommand("user", "create", email, "--type=admin",
+	out, err := gravityCommand("user", "create", "--type=admin",
 		fmt.Sprintf("--email=%s", email), fmt.Sprintf("--password=%s", password))
 	log.Infof("create user output: %s", string(out))
 	if strings.Contains(string(out), "already exists") {
