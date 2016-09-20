@@ -1,4 +1,4 @@
-export VER := $(shell git describe --tags)
+VER := $(shell git describe --tags|awk -F'[.-]' '{print $$1 "." $$2 "." $$4}')
 NAME := bandwagon
 PACKAGE := gravitational.io/$(NAME):$(VER)
 OPS_URL ?= https://opscenter.localhost.localdomain:33009
@@ -36,7 +36,7 @@ run: build
 import: build
 	$(GRAVITY) --insecure app delete $(PACKAGE) --force --ops-url=$(OPS_URL) && \
 	$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL) \
-		--version=$(VER) --set-dep=$(NAME):$(VER)
+		--version=$(VER) --set-image=$(NAME):$(VER)
 
 
 .PHONY: web-build
