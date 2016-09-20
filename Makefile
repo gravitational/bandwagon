@@ -35,7 +35,8 @@ run: build
 .PHONY: import
 import: build
 	$(GRAVITY) --insecure app delete $(PACKAGE) --force --ops-url=$(OPS_URL) && \
-		$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL) --version=$(VER)
+	$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL) \
+		--version=$(VER) --set-dep=$(NAME):$(VER)
 
 
 .PHONY: web-build
