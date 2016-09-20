@@ -19,7 +19,6 @@ function getTargetHostName(urlObj){
 }
 
 var APP_PATH = urlObj.path;
-var APP_API_PATH = APP_PATH + '/api';
 var PROXY_TARGET = getTargetHostName(urlObj);
 var PORT = 3001;
 
@@ -44,8 +43,7 @@ function getTargetOptions() {
          // redirect all requests to static files to our middleware defined bellow.
          // note that we only need it to avoid issues with font handling by react hot.
          // http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts
-         req.originalUrl.indexOf(APP_PATH) !== -1  &&
-         req.originalUrl.indexOf(APP_API_PATH) === -1 ) {
+         req.originalUrl.indexOf(APP_PATH+'/fonts/') !== -1 ) {
          console.log('Skipping proxy for browser request - ' + req.originalUrl);
          return req.originalUrl;
        }
