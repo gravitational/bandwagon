@@ -1,4 +1,4 @@
-VER := $(shell git describe --tags|awk -F'[.-]' '{print $$1 "." $$2 "." $$4}')
+VER := $(shell git describe --tags)
 NAME := bandwagon
 PACKAGE := gravitational.io/$(NAME):$(VER)
 OPS_URL ?= https://opscenter.localhost.localdomain:33009
