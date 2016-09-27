@@ -4,7 +4,7 @@ const EndPoints = React.createClass({
 
   renderEndpoint(endpoint, index){
     let { urls, name, description } = endpoint;
-    let $urls = urls.map( (url, key) => <div key={key}><a href={url}>{url}</a></div>);
+    let $urls = urls.map( (url, key) => <div key={key}><a href={url} target="_blank">{url}</a></div>);
     return (
       <div key={index} className="my-page-section-endpoints-item">
         <div>{description || name}</div>
@@ -24,8 +24,8 @@ const EndPoints = React.createClass({
 
     return (
       <div className="my-page-section-endpoints">
-        <h3 className="m-b m-t">Application endpoints</h3>
-        <div className="my-page-section-endpoints-items m-l-sm">
+        <h3 className="m-t">Please save below information for your future reference.</h3>
+        <div className="my-page-section-endpoints-items">
           {$endpoints}
         </div>
       </div>

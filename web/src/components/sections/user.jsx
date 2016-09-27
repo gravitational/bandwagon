@@ -39,34 +39,32 @@ const UserSection = React.createClass({
   render() {
     return (
       <div className="">
-        <h3 className="">Create Admin User</h3>
-        <div className="m-l-sm m-t">
+        <h3 className="">Admin User</h3>
+        <div className="m-t">
           <form ref="form">
-            <div className="m-l-sm">
-              <div className="form-group">
-                <input
-                  autoFocus
-                  type="email"
-                  name="email"
-                  ref="email"
-                  className="form-control required"
-                  placeholder="Email"/>
-              </div>
-              <div className="form-group">
-                <input
-                  ref="password"
-                  type="password"
-                  name="password"
-                  className="form-control"
-                  placeholder="Password" />
-              </div>
-              <div className="form-group">
-                <input
-                  type="password"
-                  name="passwordConfirmed"
-                  className="form-control"
-                  placeholder="Re-enter password"/>
-              </div>
+            <div className="form-group">
+              <input
+                autoFocus
+                type="email"
+                name="email"
+                ref="email"
+                className="form-control required"
+                placeholder="Email"/>
+            </div>
+            <div className="form-group">
+              <input
+                ref="password"
+                type="password"
+                name="password"
+                className="form-control"
+                placeholder="Password" />
+            </div>
+            <div className="form-group">
+              <input
+                type="password"
+                name="passwordConfirmed"
+                className="form-control"
+                placeholder="Re-enter password"/>
             </div>
           </form>
         </div>

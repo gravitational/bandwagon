@@ -23,7 +23,7 @@ body{
 
 .my-page-header{
   min-width: 300px;
-  margin: 50px auto;
+  margin: 50px auto 40px auto;
 }
 
 .my-page-section{
@@ -37,14 +37,12 @@ body{
   }
 
   .my-page-section-endpoints-items{
-    display: flex;
-    flex-wrap: wrap;
     margin-bottom: -15px;
   }
 
   .my-page-section-endpoints-item{
-    margin-bottom: 15px;
-    margin-left: 15px;
+    font-size: 14px;
+    margin-bottom: 15px;    
     margin-right: 20px;
   }
 }

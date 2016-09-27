@@ -35,7 +35,7 @@ const RemoteAssistance = React.createClass({
     return (
       <div>
         <h3>Remote Assistance</h3>
-        <div className="m-l-md m-t">
+        <div className="m-t">
           <RadioGroup
             options={options}
             value={this.state.value}

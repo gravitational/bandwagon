@@ -16,8 +16,8 @@ let apiUtils = {
   init() {
     let cfg = {
       url: 'api/info',
-      type: "GET",
-      dataType: "json"
+      type: 'GET',
+      dataType: 'json'
     }
 
     return $.ajax(cfg).then(createInfo);
