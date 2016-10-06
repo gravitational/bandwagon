@@ -66,5 +66,5 @@ func gravityCommand(a ...string) ([]byte, error) {
 
 const (
 	// gravityURL is the URL of the gravity site k8s service running locally
-	gravityURL = "https://gravity-site.kube-system.svc.cluster.local:33009"
+	gravityURL = "https://gravity-site.kube-system.svc.cluster.local:3009"
 )
