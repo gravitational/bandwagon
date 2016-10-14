@@ -34,6 +34,7 @@ function createInfo(json){
 
   endpoints = endpoints.map(item => {
     let { name, description, addresses } = item;
+    addresses = addresses || [];
     let urls = addresses.map( addr => addr);
     return {
       name,
