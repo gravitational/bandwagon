@@ -25,7 +25,9 @@ let apiUtils = {
 }
 
 function createInfo(json){
-  let { endpoints=[], app={} } = json;
+  let { endpoints, app={} } = json;
+
+  endpoints = endpoints || [];
 
   let application = {
     name: app.name || 'Application',
