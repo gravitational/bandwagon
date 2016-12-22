@@ -14,12 +14,12 @@
   }
 
   input:checked ~ .grv-control-radio-indicator {
-    background: #1ab394;
+    background: $navy;
   }
 
   &:hover input:not([disabled]):checked ~ .grv-control-radio-indicator,
   input:checked:focus ~ .grv-control-radio-indicator {
-    background: #18a689;
+    background: $navy;
   }
 
   input:disabled ~ .grv-control-radio-indicator {
