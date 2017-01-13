@@ -5,11 +5,8 @@ $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome";
 @import "inputs.scss";
 
-body{
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: white;
-  font-size: 13px;
-  color: #676a6c;
+body{  
+  background-color: white;    
   overflow-x: hidden;
 
   h1, h2, h3, h4{
