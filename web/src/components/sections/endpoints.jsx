@@ -7,8 +7,9 @@ const EndPoints = React.createClass({
     let $urls = urls.map( (url, key) => <div key={key}><a href={url} target="_blank">{url}</a></div>);
     return (
       <div key={index} className="my-page-section-endpoints-item">
-        <div>{description || name}</div>
-        <div>{$urls}</div>
+        <strong>{name}</strong>
+        <div className="text-muted">{description}</div>
+        <div className="m-t-xs">{$urls}</div>
       </div>
     )
   },
@@ -19,7 +20,7 @@ const EndPoints = React.createClass({
     if(data.length === 0){
       return null;
     }
-
+    
     let $endpoints = data.map(this.renderEndpoint);
 
     return (

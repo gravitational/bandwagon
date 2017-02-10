@@ -50,8 +50,11 @@ const UserSection = React.createClass({
                 ref="email"
                 className="form-control required"
                 placeholder="Email"/>
+              <div className="help-block">               
+                Please create your credentials for the Installer Administration User. The Admin User has access to the Installer, can provision additional nodes and upgrade the cluster.              
+              </div>
             </div>
-            <div className="form-group">
+            <div className="form-group m-t">
               <input
                 ref="password"
                 type="password"
