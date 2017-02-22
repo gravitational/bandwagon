@@ -1,4 +1,6 @@
-# Gravitational Final Step Application
+# Telekube Final Install Step Application
+
+Bandwagon is the application you can fork, customize and tweak to set up last installation step of Telekube install wizard.
 
 ### Making Changes
 
