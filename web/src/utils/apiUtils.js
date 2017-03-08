@@ -26,11 +26,11 @@ let apiUtils = {
 
 function createInfo(json){
   let { endpoints, app={} } = json;
-
+  let name = app.displayName || app.name;
   endpoints = endpoints || [];
 
   let application = {
-    name: app.name || 'Application',
+    name: name || 'Application',    
     version: app.version
   };
 
