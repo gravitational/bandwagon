@@ -40,27 +40,14 @@ let apiUtils = {
 }
 
 function createInfo(json){
-  let { endpoints, app={} } = json;
+  let { app={} } = json;
   let name = app.displayName || app.name;
-  endpoints = endpoints || [];
-
   let application = {
     name: name || 'Application',    
     version: app.version
   };
 
-  endpoints = endpoints.map(item => {
-    let { name, description, addresses } = item;
-    addresses = addresses || [];
-    let urls = addresses.map( addr => addr);
-    return {
-      name,
-      description,
-      urls
-    }
-  });
-
-  return { endpoints, application };
+  return { application };
 }
 
 export default apiUtils;

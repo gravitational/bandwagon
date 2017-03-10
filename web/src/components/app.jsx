@@ -15,7 +15,6 @@ limitations under the License.
 */
 import React from 'react';
 import Form from './form.jsx';
-import Confirmation from './confirmation.jsx';
 import apiUtils from './../utils/apiUtils';
 import { PageIndicator } from './items.jsx';
 
@@ -23,9 +22,7 @@ const App = React.createClass({
 
   getInitialState() {
     return {
-      application: {},
-      endpoints: [],
-      isFormSumbitted: false,
+      application: {},      
       isLoading: true,
       isLoadingError: false
     }
@@ -38,9 +35,7 @@ const App = React.createClass({
   },
 
   handleFormSubmitted(){
-    this.setState({
-      isFormSumbitted: true
-    });
+    window.location.reload();
   },
 
   handleLoadingComplete(info){
@@ -57,24 +52,14 @@ const App = React.createClass({
   render() {
     let {
       isLoadingError,
-      isLoading,
-      isFormSumbitted,
-      endpoints,
+      isLoading,      
       application
     } = this.state;
-
-    let $pageContent = null;
-
-    if(isFormSumbitted){
-      $pageContent = <Confirmation application={application} endpoints={endpoints} />
-    }else{
-      $pageContent = <Form application={application} onSubmitted={this.handleFormSubmitted} />
-    }
-
+    
     return (
       <div className="my-page container">
         <PageIndicator isLoading={isLoading} isError={isLoadingError}>
-          {$pageContent}
+          <Form application={application} onSubmitted={this.handleFormSubmitted} />
         </PageIndicator>
       </div>
     );
