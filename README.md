@@ -13,7 +13,8 @@ If something is not working, do `make clean` and then repeat the commands above.
 
 ### Enabling It In Your Application
 
-To enable a web app as a custom installer step in your application, you just need to define an endpoint in your manifest and then refer to it in the installer configuration section:
+To enable a web app as a custom installer step in your application, you just need to define an endpoint in 
+your manifest and then refer to it in the installer configuration section:
 
 ```yaml
 apiVersion: bundle.gravitational.io/v2
