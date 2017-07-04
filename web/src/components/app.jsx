@@ -24,7 +24,8 @@ const App = React.createClass({
     return {
       application: {},      
       isLoading: true,
-      isLoadingError: false
+      isLoadingError: false,
+      errorText: ''
     }
   },
 
@@ -45,20 +46,22 @@ const App = React.createClass({
     })
   },
 
-  handleLoadingError(){
-    this.setState({isLoadingError: true})
+  handleLoadingError(err){
+    let errorText = apiUtils.getErrorText(err);
+    this.setState({isLoadingError: true, errorText})
   },
 
   render() {
     let {
       isLoadingError,
       isLoading,      
-      application
+      application,
+      errorText
     } = this.state;
     
     return (
       <div className="my-page container">
-        <PageIndicator isLoading={isLoading} isError={isLoadingError}>
+        <PageIndicator isLoading={isLoading} isError={isLoadingError} errorText={errorText}>
           <Form application={application} onSubmitted={this.handleFormSubmitted} />
         </PageIndicator>
       </div>

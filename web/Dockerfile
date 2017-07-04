@@ -5,8 +5,6 @@ ARG GID
 
 RUN mkdir -p /app
 
-EXPOSE 3000
-
 COPY package.json /app/
 
 WORKDIR /app

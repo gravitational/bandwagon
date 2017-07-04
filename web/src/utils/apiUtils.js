@@ -15,39 +15,72 @@ limitations under the License.
 */
 import $ from 'jquery';
 
+const ajaxDefaultCfg = {
+  contentType: 'application/json; charset=utf-8',
+  dataType: 'json',
+  cache: false
+}
+
 let apiUtils = {
 
   post(data){
     let cfg = {
-      url: 'api/complete',
+      url: 'api/complete',            
       type: 'POST',
-      dataType: 'json',
       data: JSON.stringify(data)
     };
 
-    return $.ajax(cfg);
+    return this.ajax(cfg);
   },
 
   init() {
     let cfg = {
       url: 'api/info',
-      type: 'GET',
-      dataType: 'json'
+      type: 'GET'      
     }
 
-    return $.ajax(cfg).then(createInfo);
+    return this.ajax(cfg).then(createInfo);
+  },
+
+  ajax(cfg){
+    return $.ajax($.extend({}, ajaxDefaultCfg, cfg));
+  },
+
+  getErrorText(err){
+    let msg = 'Unknown error';                  
+    
+    if (err instanceof Error) {
+      return err.message || msg;
+    }
+      
+    if(err.responseJSON && err.responseJSON.message){
+      return err.responseJSON.message;
+    }
+      
+    if (err.responseJSON && err.responseJSON.error) {
+      return err.responseJSON.error.message || msg;
+    }
+    
+    if (err.responseText) {
+      return err.responseText;
+    }
+
+    return msg;
   }
+  
 }
 
 function createInfo(json){
-  let { app={} } = json;
+  let { app={}, remoteSupportConfigured } = json;
   let name = app.displayName || app.name;
   let application = {
     name: name || 'Application',    
-    version: app.version
+    version: app.version,
+    remoteSupportConfigured    
   };
 
   return { application };
 }
+
 
 export default apiUtils;
