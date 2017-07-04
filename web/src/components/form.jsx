@@ -40,7 +40,7 @@ const Form = React.createClass({
   },
 
   handleSubmitError(err){
-    let errorMessage = err.responseJSON ? err.responseJSON.message : 'Unknown error';
+    let errorMessage = apiUtils.getErrorText(err);
     this.setState({
       errorMessage,
       isSubmitting: false,
@@ -59,8 +59,9 @@ const Form = React.createClass({
     if(this.refs.userSection.isValid()){
       this.makeProcessing();
 
-      let userData = this.refs.userSection.getData();
-      let support = this.refs.remoteAssistanceSection.isEnabled();
+      let { remoteSupportConfigured } = this.props.application;
+      let userData = this.refs.userSection.getData();      
+      let support = remoteSupportConfigured && this.refs.remoteAssistanceSection.isEnabled();
       let data = {
         ...userData,
         support
@@ -83,6 +84,7 @@ const Form = React.createClass({
     let $errorMsg = null;
     let $btnContent = <span>Finish</span>;
     let btnClass = `btn btn-primary block my-page-btn-submit ${isSubmitting ? "disabled" : ""}`;
+    let remoteAssistanceClass = application.remoteSupportConfigured ? '' : 'hidden'
 
     // show server error
     if(isSubmittingError){
@@ -93,7 +95,7 @@ const Form = React.createClass({
     if(isSubmitting){
       $btnContent = <i className="fa fa-cog fa-spin fa-lg" />
     }
-
+    
     return (
       <div>
         <div className="my-page-header text-center">
@@ -104,13 +106,13 @@ const Form = React.createClass({
               <span>{application.name}</span> <small>ver.{application.version}</small>
             </h2>
           </div>
-        </div>
+        </div>        
         <div className="my-page-section">
           <UserSection ref="userSection"/>
         </div>
-        <div className="my-page-section">
+        <div className={ `my-page-section ${remoteAssistanceClass}` } >
           <RemoteAssistanceSection ref="remoteAssistanceSection"/>
-        </div>
+        </div>        
         <div className="my-page-section">
           <div className="text-center">
             <a onClick={this.onSubmit} className={btnClass}>

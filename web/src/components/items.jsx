@@ -20,13 +20,16 @@ const MSG_ERROR_DEFAULT = 'Whoops, something went wrong.';
 const PageIndicator = React.createClass({
 
   render() {
-    let { isLoading, isError } = this.props;
+    let { isLoading, isError, errorText } = this.props;
 
     if(isError){
       return (
         <div className="my-page-indicator-error">
           <div><i className="fa fa-frown-o"></i> </div>
           <h1>{MSG_ERROR_DEFAULT}</h1>
+          <div className="m-t text-muted" style={{ wordBreak: "break-all" }}>
+            <small>{errorText}</small>
+          </div>          
         </div>
       )
     }
