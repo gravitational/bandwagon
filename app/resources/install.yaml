@@ -28,6 +28,8 @@ spec:
     metadata:
       labels:
         app: bandwagon
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: docker/default
     spec:
       securityContext:
         runAsUser: 1000
