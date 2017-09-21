@@ -1,7 +1,7 @@
 VER ?= $(shell git describe --tags)
 NAME := bandwagon
 PACKAGE := gravitational.io/$(NAME):$(VER)
-OPS_URL ?= https://localhost:33009
+OPS_URL ?= https://opscenter.localhost.localdomain:33009
 GRAVITY ?= gravity
 
 CURRENT_DIR := $(shell pwd)
