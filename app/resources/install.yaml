@@ -35,6 +35,10 @@ spec:
         - key: "gravitational.io/runlevel"
           value: system
           operator: Equal
+          # allows to run on master nodes
+        - key: "node-role.kubernetes.io/master"
+          operator: "Equal"
+          effect: "NoSchedule"
       securityContext:
         runAsUser: 1000
       containers:
