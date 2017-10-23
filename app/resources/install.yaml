@@ -37,7 +37,7 @@ spec:
           operator: Equal
           # allows to run on master nodes
         - key: "node-role.kubernetes.io/master"
-          operator: "Equal"
+          operator: "Exists"
           effect: "NoSchedule"
       securityContext:
         runAsUser: 1000
