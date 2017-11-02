@@ -1,4 +1,5 @@
-FROM node:5-slim
+FROM node:8.1.2-slim
+RUN apt-get update && apt-get install -y python python-dev python-pip 
 
 ARG UID
 ARG GID
@@ -9,12 +10,8 @@ COPY package.json /app/
 
 WORKDIR /app
 
-RUN npm install --production ; npm cache clear
-
 VOLUME ["/app/dist"]
-
+RUN npm install
 COPY . /app
 
-RUN groupadd builder --gid=$GID  -o 
-RUN useradd builder --uid=$UID --gid=$GID --create-home --shell=/bin/bash 
-RUN chown builder /app -R
+RUN chown $GID /app -R
