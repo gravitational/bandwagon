@@ -1,6 +1,6 @@
-VER ?= $(shell git describe --tags)
+VERSION ?= $(shell git describe --tags)
 NAME := bandwagon
-PACKAGE := gravitational.io/$(NAME):$(VER)
+PACKAGE := gravitational.io/$(NAME):$(VERSION)
 OPS_URL ?= https://opscenter.localhost.localdomain:33009
 GRAVITY ?= gravity
 
@@ -18,25 +18,25 @@ all: build
 
 .PHONY: build
 build: web-build go-build
-	docker build -t $(NAME):$(VER) .
+	docker build -t $(NAME):$(VERSION) .
 
 
 .PHONY: push
 push:
-	docker tag $(NAME):$(VER) apiserver:5000/$(NAME):$(VER) && \
-		docker push apiserver:5000/$(NAME):$(VER)
+	docker tag $(NAME):$(VERSION) apiserver:5000/$(NAME):$(VERSION) && \
+		docker push apiserver:5000/$(NAME):$(VERSION)
 
 
 .PHONY: run
 run: build
-	docker run -p 8000:8000 $(NAME):$(VER)
+	docker run -p 8000:8000 $(NAME):$(VERSION)
 
 
 .PHONY: import
 import: build
 	$(GRAVITY) --insecure app delete $(PACKAGE) --force --ops-url=$(OPS_URL) && \
 	$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL) \
-		--version=$(VER) --set-image=$(NAME):$(VER)
+		--version=$(VERSION) --set-image=$(NAME):$(VERSION)
 
 
 .PHONY: web-build
