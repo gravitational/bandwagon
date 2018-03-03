@@ -36,7 +36,7 @@ spec:
           value: system
           operator: Equal
       securityContext:
-        runAsUser: 1000
+        runAsUser: -1
       containers:
         - name: bandwagon
           image: bandwagon:0.0.0
