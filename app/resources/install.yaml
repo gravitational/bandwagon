@@ -31,6 +31,9 @@ spec:
       annotations:
         seccomp.security.alpha.kubernetes.io/pod: docker/default
     spec:
+      # schedule on master nodes
+      nodeSelector:
+        gravitational.io/k8s-role: master
       tolerations:
         - key: "gravitational.io/runlevel"
           value: system
