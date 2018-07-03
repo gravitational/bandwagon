@@ -1,8 +1,10 @@
 VERSION ?= $(shell git describe --tags)
 NAME := bandwagon
 PACKAGE := gravitational.io/$(NAME):$(VERSION)
+PACKAGE_FILENAME := $(NAME)-$(VERSION).tar.gz
 OPS_URL ?= https://opscenter.localhost.localdomain:33009
 GRAVITY ?= gravity
+STATE_DIR ?=
 
 CURRENT_DIR := $(shell pwd)
 BUILD_DIR := $(CURRENT_DIR)/build
@@ -32,10 +34,25 @@ run: build
 	docker run -p 8000:8000 $(NAME):$(VERSION)
 
 
+#
+# The 'app' target builds bandwagon Telekube package in the current directory, for example:
+#
+#   $ VERSION=1.2.0 make app
+#
+# will produce 'bandwagon-1.2.0.tar.gz'.
+#
+.PHONY: app
+app: TMPDIR := $(shell mktemp -d)
+app:
+	$(MAKE) import OPS_URL= STATE_DIR=$(TMPDIR) && \
+	$(GRAVITY) package export $(PACKAGE) $(PACKAGE_FILENAME) --state-dir=$(TMPDIR) && \
+	rm -rf $(TMPDIR)
+
+
 .PHONY: import
 import: build
-	$(GRAVITY) --insecure app delete $(PACKAGE) --force --ops-url=$(OPS_URL) && \
-	$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL) \
+	$(GRAVITY) --insecure app delete $(PACKAGE) --force --ops-url=$(OPS_URL) --state-dir=$(STATE_DIR) && \
+	$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL) --state-dir=$(STATE_DIR) \
 		--version=$(VERSION) --set-image=$(NAME):$(VERSION)
 
 
@@ -54,7 +71,6 @@ go-build:
 .PHONY: go-build-in-buildbox
 go-build-in-buildbox:
 	cd $(BUILDBOX_DIR) && \
-		go get -v && \
 		go build -o ./build/$(NAME)
 
 

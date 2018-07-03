@@ -52,7 +52,7 @@ func SetupHandlers() *mux.Router {
 //     ]
 //   }
 func infoHandler(w http.ResponseWriter, r *http.Request) {
-	info, err := gravity.GetSiteInfo()
+	info, err := gravity.GetClusterInfo()
 	if err != nil {
 		replyError(w, err.Error())
 		return

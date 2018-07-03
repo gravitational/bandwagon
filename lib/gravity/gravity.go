@@ -17,6 +17,7 @@ limitations under the License.
 package gravity
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -51,6 +52,18 @@ func CreateUser(email, password string) error {
 
 // ConfigureRemoteSupport enables or disables configured trusted cluster.
 func ConfigureRemoteSupport(enabled bool) error {
+	infoS, err := GetClusterInfo()
+	if err != nil {
+		return trace.Wrap(err)
+	}
+	var info clusterInfo
+	if err := json.Unmarshal([]byte(infoS), &info); err != nil {
+		return trace.Wrap(err)
+	}
+	if !info.RemoteSupportConfigured {
+		log.Info("Remote support is not configured.")
+		return nil
+	}
 	action := "disable"
 	if enabled {
 		action = "enable"
@@ -61,6 +74,13 @@ func ConfigureRemoteSupport(enabled bool) error {
 	}
 	log.Infof("Remote support %vd: %s.", out)
 	return nil
+}
+
+// clusterInfo is a subset of the local cluster info
+type clusterInfo struct {
+	// RemoteSupportConfigured indicates whether local cluster has remote
+	// support configured (enabled or disabled trusted cluster)
+	RemoteSupportConfigured bool `json:"remoteSupportConfigured"`
 }
 
 // CompleteInstall marks the site installation step as complete.
@@ -84,8 +104,8 @@ func CompleteInstall(support bool) error {
 	return nil
 }
 
-// GetSiteInfo returns a JSON-formatted string with the site information.
-func GetSiteInfo() (string, error) {
+// GetClusterInfo returns a JSON-formatted string with the local cluster information.
+func GetClusterInfo() (string, error) {
 	out, err := gravityCommand("site", "info", "--output=json")
 	if err != nil {
 		return "", trace.Wrap(err, "failed to get cluster info: %s", out)
