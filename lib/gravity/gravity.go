@@ -72,7 +72,7 @@ func ConfigureRemoteSupport(enabled bool) error {
 	if err != nil {
 		return trace.Wrap(err, "failed to %v tunnel: %s", action, out)
 	}
-	log.Infof("Remote support %vd: %s.", out)
+	log.Infof("Remote support %vd: %s.", action, out)
 	return nil
 }
 
