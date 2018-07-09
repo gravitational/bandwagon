@@ -42,11 +42,8 @@ run: build
 # will produce 'bandwagon-1.2.0.tar.gz'.
 #
 .PHONY: app
-app: TMPDIR := $(shell mktemp -d)
 app:
-	$(MAKE) import OPS_URL= STATE_DIR=$(TMPDIR) && \
-	$(GRAVITY) package export $(PACKAGE) $(PACKAGE_FILENAME) --state-dir=$(TMPDIR) && \
-	rm -rf $(TMPDIR)
+	./app.sh $(PACKAGE) $(PACKAGE_FILENAME)
 
 
 .PHONY: import

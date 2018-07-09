@@ -2,15 +2,6 @@
 
 
 [[projects]]
-  branch = "master"
-  name = "github.com/alecthomas/template"
-  packages = [
-    ".",
-    "parse"
-  ]
-  revision = "a0175ee3bccc567396460bf5acd36800cb10c49c"
-
-[[projects]]
   name = "github.com/gorilla/context"
   packages = ["."]
   revision = "08b5f424b9271eedf6f9f0ce86cb9396ed337a42"
@@ -64,6 +55,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "2772e5fd9a237e2f252714ce1bc96d2c5c619bf6d1b5ff63f5a2cc998db01efc"
+  inputs-digest = "654ec775f6d25fb95da82845ca3557fd543e76e572a5f541b2ae54fdff2667ca"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -21,9 +21,8 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
-	"strings"
+	"text/template"
 
-	"github.com/alecthomas/template"
 	"github.com/gravitational/trace"
 	log "github.com/sirupsen/logrus"
 )
@@ -117,12 +116,25 @@ func GetClusterInfo() (string, error) {
 // IsEnterprise returns true if the local Telekube cluster is of enterprise
 // edition.
 func IsEnterprise() (bool, error) {
-	out, err := gravityCommand("version")
+	bytes, err := gravityCommand("version", "--output=json")
 	if err != nil {
-		return false, trace.Wrap(err, "failed to determine gravity version: %s", out)
+		return false, trace.Wrap(err, "failed to determine gravity version: %s", bytes)
 	}
-	return strings.Contains(strings.ToLower(string(out)), "enterprise"), nil
+	var ver version
+	if err := json.Unmarshal(bytes, &ver); err != nil {
+		return false, trace.Wrap(err, "failed to parse version as json: %s", bytes)
+	}
+	return ver.Edition == enterprise, nil
 }
+
+// version is a subset of the gravity version object
+type version struct {
+	// Edition is the product edition
+	Edition string `json:"edition"`
+}
+
+// enterprise is the name of the Enterprise edition
+const enterprise = "enterprise"
 
 // gravityCommand runs the gravity command line tool with the provided arguments
 // using locally running gravity site as OpsCenter.
