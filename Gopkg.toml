@@ -1,0 +1,15 @@
+[[constraint]]
+  name = "github.com/gorilla/mux"
+  version = "1.6.2"
+
+[[constraint]]
+  name = "github.com/gravitational/trace"
+  version = "1.1.4"
+
+[[constraint]]
+  name = "github.com/sirupsen/logrus"
+  version = "1.0.5"
+
+[prune]
+  go-tests = true
+  unused-packages = true
