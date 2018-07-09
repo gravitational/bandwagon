@@ -4,7 +4,6 @@ PACKAGE := gravitational.io/$(NAME):$(VERSION)
 PACKAGE_FILENAME := $(NAME)-$(VERSION).tar.gz
 OPS_URL ?= https://opscenter.localhost.localdomain:33009
 GRAVITY ?= gravity
-STATE_DIR ?=
 
 CURRENT_DIR := $(shell pwd)
 BUILD_DIR := $(CURRENT_DIR)/build
@@ -48,8 +47,8 @@ app:
 
 .PHONY: import
 import: build
-	$(GRAVITY) --insecure app delete $(PACKAGE) --force --ops-url=$(OPS_URL) --state-dir=$(STATE_DIR) && \
-	$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL) --state-dir=$(STATE_DIR) \
+	$(GRAVITY) --insecure app delete $(PACKAGE) --force --ops-url=$(OPS_URL) && \
+	$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL) \
 		--version=$(VERSION) --set-image=$(NAME):$(VERSION)
 
 
