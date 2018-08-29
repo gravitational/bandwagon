@@ -25,7 +25,7 @@ const PageIndicator = React.createClass({
     if(isError){
       return (
         <div className="my-page-indicator-error">
-          <div><i className="fa fa-exclamation-triangle"></i> </div>
+          <div><i className="fa fa-exclamation-triangle"/> </div>
           <h1>{MSG_ERROR_DEFAULT}</h1>
           <div className="m-t text-muted" style={{ wordBreak: "break-all" }}>
             <small>{errorText}</small>
