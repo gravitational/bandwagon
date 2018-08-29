@@ -37,6 +37,10 @@ var common = {
     chunkFilename: '[name].[chunkhash].js'
   },
 
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+
   module: {
     loaders: [
       {

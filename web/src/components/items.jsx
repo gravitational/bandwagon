@@ -15,7 +15,7 @@ limitations under the License.
 */
 import React from 'react';
 
-const MSG_ERROR_DEFAULT = 'Whoops, something went wrong.';
+const MSG_ERROR_DEFAULT = 'Internal Error';
 
 const PageIndicator = React.createClass({
 
@@ -25,11 +25,11 @@ const PageIndicator = React.createClass({
     if(isError){
       return (
         <div className="my-page-indicator-error">
-          <div><i className="fa fa-frown-o"></i> </div>
+          <div><i className="fa fa-exclamation-triangle"></i> </div>
           <h1>{MSG_ERROR_DEFAULT}</h1>
           <div className="m-t text-muted" style={{ wordBreak: "break-all" }}>
             <small>{errorText}</small>
-          </div>          
+          </div>
         </div>
       )
     }

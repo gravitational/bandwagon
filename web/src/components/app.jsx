@@ -14,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
-import Form from './form.jsx';
-import apiUtils from './../utils/apiUtils';
-import { PageIndicator } from './items.jsx';
+import Form from './form';
+import apiUtils from '../utils/apiUtils';
+import session from '../utils/sessionUtils';
+import { PageIndicator } from './items';
 
 const App = React.createClass({
 
   getInitialState() {
     return {
-      application: {},      
+      application: {},
       isLoading: true,
       isLoadingError: false,
       errorText: ''
@@ -30,12 +31,14 @@ const App = React.createClass({
   },
 
   componentDidMount(){
-    apiUtils.init()
-      .done(this.handleLoadingComplete)
-      .fail((this.handleLoadingError));
+    session.ensureSession()
+    .then(() => apiUtils.init())
+    .done(this.handleLoadingComplete)
+    .fail(this.handleLoadingError);
   },
 
   handleFormSubmitted(){
+    // backend will redirect a user to a cluster page
     window.location.reload();
   },
 
@@ -54,11 +57,11 @@ const App = React.createClass({
   render() {
     let {
       isLoadingError,
-      isLoading,      
+      isLoading,
       application,
       errorText
     } = this.state;
-    
+
     return (
       <div className="my-page container">
         <PageIndicator isLoading={isLoading} isError={isLoadingError} errorText={errorText}>

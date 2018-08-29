@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
-import UserSection from './sections/user.jsx';
-import RemoteAssistanceSection from './sections/remoteAssistance.jsx';
-import apiUtils from './../utils/apiUtils';
+import UserSection from './sections/user';
+import RemoteAssistanceSection from './sections/remoteAssistance';
+import apiUtils from '../utils/apiUtils';
 
 const Form = React.createClass({
 
@@ -60,7 +60,7 @@ const Form = React.createClass({
       this.makeProcessing();
 
       let { remoteSupportConfigured } = this.props.application;
-      let userData = this.refs.userSection.getData();      
+      let userData = this.refs.userSection.getData();
       let support = remoteSupportConfigured && this.refs.remoteAssistanceSection.isEnabled();
       let data = {
         ...userData,
@@ -95,7 +95,7 @@ const Form = React.createClass({
     if(isSubmitting){
       $btnContent = <i className="fa fa-cog fa-spin fa-lg" />
     }
-    
+
     return (
       <div>
         <div className="my-page-header text-center">
@@ -106,13 +106,13 @@ const Form = React.createClass({
               <span>{application.name}</span> <small>ver.{application.version}</small>
             </h2>
           </div>
-        </div>        
+        </div>
         <div className="my-page-section">
           <UserSection ref="userSection"/>
         </div>
         <div className={ `my-page-section ${remoteAssistanceClass}` } >
           <RemoteAssistanceSection ref="remoteAssistanceSection"/>
-        </div>        
+        </div>
         <div className="my-page-section">
           <div className="text-center">
             <a onClick={this.onSubmit} className={btnClass}>

@@ -13,19 +13,29 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import $ from 'jquery';
+import localStorage from './storageUtils';
 
 const ajaxDefaultCfg = {
   contentType: 'application/json; charset=utf-8',
   dataType: 'json',
-  cache: false
+  cache: false,
+  beforeSend: xhr => setAuthHeaders(xhr)
 }
 
 let apiUtils = {
 
+  renewToken(){
+    return this.ajax({
+      type: 'POST',
+      url: '/proxy/v1/webapi/sessions/renew'
+    })
+  },
+
   post(data){
     let cfg = {
-      url: 'api/complete',            
+      url: 'api/complete',
       type: 'POST',
       data: JSON.stringify(data)
     };
@@ -36,7 +46,7 @@ let apiUtils = {
   init() {
     let cfg = {
       url: 'api/info',
-      type: 'GET'      
+      type: 'GET'
     }
 
     return this.ajax(cfg).then(createInfo);
@@ -46,37 +56,45 @@ let apiUtils = {
     return $.ajax($.extend({}, ajaxDefaultCfg, cfg));
   },
 
+  logout(){
+    window.location = '/web/login';
+  },
+
   getErrorText(err){
-    let msg = 'Unknown error';                  
-    
+    let msg = 'Unknown error';
+
     if (err instanceof Error) {
       return err.message || msg;
     }
-      
+
     if(err.responseJSON && err.responseJSON.message){
       return err.responseJSON.message;
     }
-      
+
     if (err.responseJSON && err.responseJSON.error) {
       return err.responseJSON.error.message || msg;
     }
-    
+
     if (err.responseText) {
       return err.responseText;
     }
 
     return msg;
   }
-  
+}
+
+function setAuthHeaders(xhr) {
+  const bearerToken = localStorage.getBearerToken() || {};
+  xhr.setRequestHeader('Authorization', 'Bearer ' + bearerToken.accessToken);
 }
 
 function createInfo(json){
-  let { app={}, remoteSupportConfigured } = json;
-  let name = app.displayName || app.name;
-  let application = {
-    name: name || 'Application',    
+  const { app={}, remoteSupportConfigured } = json;
+  const name = app.displayName || app.name;
+  const application = {
+    name: name || 'Application',
     version: app.version,
-    remoteSupportConfigured    
+    remoteSupportConfigured
   };
 
   return { application };

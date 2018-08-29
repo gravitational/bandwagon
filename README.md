@@ -13,7 +13,7 @@ If something is not working, do `make clean` and then repeat the commands above.
 
 ### Enabling It In Your Application
 
-To enable a web app as a custom installer step in your application, you just need to define an endpoint in 
+To enable a web app as a custom installer step in your application, you just need to define an endpoint in
 your manifest and then refer to it in the installer configuration section:
 
 ```yaml
@@ -28,13 +28,13 @@ endpoints:
     serviceName: bandwagon
     # this endpoint will be hidden from the list of general application endpoints
     hidden: true
-    
+
 ...
 
 installer:
   setupEndpoints:
     - "Setup" # name of the endpoint defined above
-    
+
 ...
 ```
 
@@ -51,3 +51,7 @@ Then, run the following command to create a local user account and password:
 ```
 gravity --insecure user create --type=admin --email=<email> --password=<yourpass> --ops-url=https://gravity-site.kube-system.svc.cluster.local:3009
 ```
+
+### Web Client
+
+Refer to [web/README.md](web/README.md) for instructions on how to build Web UI.
