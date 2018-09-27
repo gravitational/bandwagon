@@ -24,6 +24,8 @@ spec:
   selector:
     matchLabels:
       app: bandwagon
+  nodeSelector:
+    gravitational.io/k8s-role: master
   template:
     metadata:
       labels:
@@ -49,6 +51,10 @@ spec:
           env:
             - name: PATH
               value: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin"
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           volumeMounts:
             - name: bin
               mountPath: /opt/bin
