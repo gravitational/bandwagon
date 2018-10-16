@@ -1,4 +1,4 @@
-VERSION ?= $(shell git describe --tags)
+export VERSION ?= $(shell git describe --tags)
 NAME := bandwagon
 PACKAGE := gravitational.io/$(NAME):$(VERSION)
 PACKAGE_FILENAME := $(NAME)-$(VERSION).tar.gz
@@ -18,8 +18,13 @@ all: build
 
 
 .PHONY: build
-build: web-build go-build
+build: web-build go-build hook-build
 	docker build -t $(NAME):$(VERSION) .
+
+
+.PHONY: hook-build
+hook-build:
+	$(MAKE) -C images hook
 
 
 .PHONY: push
@@ -49,7 +54,8 @@ app:
 import: build
 	$(GRAVITY) --insecure app delete $(PACKAGE) --force --ops-url=$(OPS_URL) && \
 	$(GRAVITY) --insecure app import ./app --vendor --ops-url=$(OPS_URL) \
-		--version=$(VERSION) --set-image=$(NAME):$(VERSION)
+		--version=$(VERSION) --set-image=$(NAME):$(VERSION) \
+		--set-image=bandwagon-hook:$(VERSION)
 
 
 .PHONY: web-build

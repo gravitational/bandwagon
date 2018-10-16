@@ -43,6 +43,8 @@ spec:
           effect: "NoSchedule"
       securityContext:
         runAsUser: -1
+      nodeSelector:
+        gravitational.io/k8s-role: master
       containers:
         - name: bandwagon
           image: bandwagon:0.0.0
