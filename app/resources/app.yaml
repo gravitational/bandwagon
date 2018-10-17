@@ -25,3 +25,39 @@ hooks:
                   - create
                   - -f
                   - /var/lib/gravity/resources/install.yaml
+  update:
+    job: |
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        name: bandwagon-update
+      spec:
+        parallelism: 1
+        completions: 1
+        template:
+          metadata:
+            name: bandwagon-update
+          spec:
+            restartPolicy: Never
+            containers:
+              - name: hook
+                image: bandwagon-hook:0.0.1
+                args: ["update"]
+  rollback:
+    job: |
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        name: bandwagon-rollback
+      spec:
+        parallelism: 1
+        completions: 1
+        template:
+          metadata:
+            name: bandwagon-rollback
+          spec:
+            restartPolicy: Never
+            containers:
+              - name: hook
+                image: bandwagon-hook:0.0.1
+                args: ["rollback"]
