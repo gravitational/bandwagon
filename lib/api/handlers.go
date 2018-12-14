@@ -18,13 +18,21 @@ package api
 
 import (
 	"encoding/json"
+	"flag"
 	"io/ioutil"
 	"net/http"
+	"path/filepath"
 
 	"github.com/gorilla/mux"
 
 	"github.com/gravitational/trace"
 	"github.com/tulip/bandwagon/lib/gravity"
+	appsv1 "k8s.io/api/apps/v1"
+	apiv1 "k8s.io/api/core/v1"
+
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/util/homedir"
 )
 
 // SetupHandlers configures API handlers.
@@ -62,12 +70,29 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func testHandler(w http.ResponseWriter, r *http.Request) {
-	info, err := gravity.GetClusterInfo()
-	if err != nil {
-		replyError(w, err.Error())
-		return
+	// kubectl -n default get ingress -o json --export tulip-factory | \
+	// 	jq -c ' .spec.rules[0].host |= "'$DOMAIN'"' | \
+	// 	jq -c '.spec.tls[0].hosts[0] |= "'$DOMAIN'"' | \
+	// kubectl -n default replace -f -
+	var kubeconfig *string
+	if home := homedir.HomeDir(); home != "" {
+		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+	} else {
+		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
 	}
-	replyString(w, string(info))
+	flag.Parse()
+
+	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	if err != nil {
+		panic(err)
+	}
+	clientset, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		panic(err)
+	}
+
+	deploymentsClient := clientset.AppsV1().Deployments(apiv1.NamespaceDefault)
+	replyString(w, string("test"))
 }
 
 // completeHandler configures the site according to the data in the request

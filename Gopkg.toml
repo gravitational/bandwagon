@@ -13,3 +13,7 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[[constraint]]
+  name = "k8s.io/client-go"
+  version = "1.5.1"

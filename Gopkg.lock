@@ -2,59 +2,88 @@
 
 
 [[projects]]
+  digest = "1:c79fb010be38a59d657c48c6ba1d003a8aa651fa56b579d959d74573b7dff8e1"
   name = "github.com/gorilla/context"
   packages = ["."]
+  pruneopts = "UT"
   revision = "08b5f424b9271eedf6f9f0ce86cb9396ed337a42"
   version = "v1.1.1"
 
 [[projects]]
+  digest = "1:e73f5b0152105f18bc131fba127d9949305c8693f8a762588a82a48f61756f5f"
   name = "github.com/gorilla/mux"
   packages = ["."]
+  pruneopts = "UT"
   revision = "e3702bed27f0d39777b0b37b664b6280e8ef8fbf"
   version = "v1.6.2"
 
 [[projects]]
+  digest = "1:1c9083fb1c179c90d299a3b9eaa3009175d2ebf327df30d4ff0ee1654e51073c"
   name = "github.com/gravitational/trace"
   packages = ["."]
+  pruneopts = "UT"
   revision = "792b9868cdf9d499e09b47f167c553e786a0e235"
   version = "1.1.4"
 
 [[projects]]
+  digest = "1:75ab90ae3f5d876167e60f493beadfe66f0ed861a710f283fb06c86437a09538"
   name = "github.com/jonboulle/clockwork"
   packages = ["."]
+  pruneopts = "UT"
   revision = "2eee05ed794112d45db504eb05aa693efd2b8b09"
   version = "v0.1.0"
 
 [[projects]]
+  digest = "1:9e9193aa51197513b3abcb108970d831fbcf40ef96aa845c4f03276e1fa316d2"
   name = "github.com/sirupsen/logrus"
   packages = ["."]
+  pruneopts = "UT"
   revision = "c155da19408a8799da419ed3eeb0cb5db0ad5dbc"
   version = "v1.0.5"
 
 [[projects]]
   branch = "master"
+  digest = "1:3f3a05ae0b95893d90b9b3b5afdb79a9b3d96e4e36e099d841ae602e4aca0da8"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
+  pruneopts = "UT"
   revision = "a49355c7e3f8fe157a85be2f77e6e269a0f89602"
 
 [[projects]]
   branch = "master"
+  digest = "1:76ee51c3f468493aff39dbacc401e8831fbb765104cbf613b89bef01cf4bad70"
   name = "golang.org/x/net"
   packages = ["context"]
+  pruneopts = "UT"
   revision = "ed29d75add3d7c4bf7ca65aac0c6df3d1420216f"
 
 [[projects]]
   branch = "master"
+  digest = "1:50e49f00c462e4531c6987ab12ab81a9a9f76bc0c3235c6e9cf9b75c2b5ff638"
   name = "golang.org/x/sys"
   packages = [
     "unix",
-    "windows"
+    "windows",
   ]
+  pruneopts = "UT"
   revision = "7138fd3d9dc8335c567ca206f4333fb75eb05d56"
+
+[[projects]]
+  digest = "1:a129b47022db3310826e5ad6ab980205cb5540ad45403170ed5577b2186d760e"
+  name = "k8s.io/client-go"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "1195e3a8ee1a529d53eed7c624527a68555ddf1f"
+  version = "v1.5.1"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "654ec775f6d25fb95da82845ca3557fd543e76e572a5f541b2ae54fdff2667ca"
+  input-imports = [
+    "github.com/gorilla/mux",
+    "github.com/gravitational/trace",
+    "github.com/sirupsen/logrus",
+    "k8s.io/client-go",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
