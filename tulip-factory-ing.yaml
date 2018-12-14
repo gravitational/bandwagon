@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "true"
+  creationTimestamp: 2018-12-07T16:07:25Z
+  generation: 2
+  labels:
+    app: factory
+    customer: tulip
+    helm_chart: factory-0.151.0-74_0001d25ad
+  name: onprem-images
+  namespace: default
+  resourceVersion: "485781"
+  selfLink: /apis/extensions/v1beta1/namespaces/default/ingresses/tulip-factory
+  uid: 3020aefc-fa3a-11e8-8037-0e87042f8ca4
+spec:
+  rules:
+  - host: rhel-test.tulip.co
+    http:
+      paths:
+      - backend:
+          serviceName: tulip-factory
+          servicePort: 8080
+        path: /
+  tls:
+  - hosts:
+    - rhel-test.tulip.co
+    secretName: tls-onprem-seedco-de
+status:
+  loadBalancer:
+    ingress:
+    - {}

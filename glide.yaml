@@ -1,0 +1,12 @@
+package: github.com/tulip/bandwagon
+import:
+- package: k8s.io/client-go
+  version: v9.0.0
+- package: github.com/gravitational/trace
+  version: 1.1.4
+- package: github.com/sirupsen/logrus
+  version: 1.0.5
+- package: github.com/gorilla/mux
+  version: 1.6.2
+- package: github.com/tidwall/sjson
+  version: 1.0.3

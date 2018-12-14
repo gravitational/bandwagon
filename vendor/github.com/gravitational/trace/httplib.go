@@ -34,8 +34,6 @@ func ErrorToCode(err error) int {
 		return http.StatusNotFound
 	case IsBadParameter(err) || IsOAuth2(err):
 		return http.StatusBadRequest
-	case IsNotImplemented(err):
-		return http.StatusNotImplemented
 	case IsCompareFailed(err):
 		return http.StatusPreconditionFailed
 	case IsAccessDenied(err):
@@ -61,8 +59,6 @@ func ReadError(statusCode int, re []byte) error {
 		e = &NotFoundError{Message: string(re)}
 	case http.StatusBadRequest:
 		e = &BadParameterError{Message: string(re)}
-	case http.StatusNotImplemented:
-		e = &NotImplementedError{Message: string(re)}
 	case http.StatusPreconditionFailed:
 		e = &CompareFailedError{Message: string(re)}
 	case http.StatusForbidden:

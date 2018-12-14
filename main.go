@@ -17,6 +17,7 @@ limitations under the License.
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/tulip/bandwagon/lib/api"
@@ -25,5 +26,6 @@ import (
 func main() {
 	router := api.SetupHandlers()
 	// we're running in a container so free of port collisions
+	fmt.Println("Starting webserver at http://localhost:8000")
 	http.ListenAndServe(":8000", router)
 }
