@@ -23,8 +23,8 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/gravitational/bandwagon/lib/gravity"
 	"github.com/gravitational/trace"
+	"github.com/tulip/bandwagon/lib/gravity"
 )
 
 // SetupHandlers configures API handlers.
@@ -32,6 +32,7 @@ func SetupHandlers() *mux.Router {
 	router := mux.NewRouter()
 	router.HandleFunc("/api/info", infoHandler).Methods("GET")
 	router.HandleFunc("/api/complete", completeHandler).Methods("POST")
+	router.HandleFunc("/api/test", testHandler).Methods("GET")
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir(assetsDir)))
 	return router
 }
@@ -52,6 +53,15 @@ func SetupHandlers() *mux.Router {
 //     ]
 //   }
 func infoHandler(w http.ResponseWriter, r *http.Request) {
+	info, err := gravity.GetClusterInfo()
+	if err != nil {
+		replyError(w, err.Error())
+		return
+	}
+	replyString(w, string(info))
+}
+
+func testHandler(w http.ResponseWriter, r *http.Request) {
 	info, err := gravity.GetClusterInfo()
 	if err != nil {
 		replyError(w, err.Error())

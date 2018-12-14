@@ -1,4 +1,4 @@
-export VERSION ?= $(shell git describe --tags)
+export VERSION ?= 5.3.1
 NAME := bandwagon
 PACKAGE := gravitational.io/$(NAME):$(VERSION)
 PACKAGE_FILENAME := $(NAME)-$(VERSION).tar.gz
@@ -10,7 +10,7 @@ BUILD_DIR := $(CURRENT_DIR)/build
 WEB_APP_DIR := $(CURRENT_DIR)/web
 
 BUILDBOX_IMAGE := quay.io/gravitational/debian-venti:go1.10.3-stretch
-BUILDBOX_DIR := /gopath/src/github.com/gravitational/$(NAME)
+BUILDBOX_DIR := /gopath/src/github.com/tulip/$(NAME)
 
 
 .PHONY: all
@@ -29,8 +29,8 @@ hook-build:
 
 .PHONY: push
 push:
-	docker tag $(NAME):$(VERSION) apiserver:5000/$(NAME):$(VERSION) && \
-		docker push apiserver:5000/$(NAME):$(VERSION)
+	docker tag $(NAME):$(VERSION) 657908024359.dkr.ecr.us-east-1.amazonaws.com/onprem/$(NAME):$(VERSION) && \
+		docker push  657908024359.dkr.ecr.us-east-1.amazonaws.com/onprem/$(NAME):$(VERSION)
 
 
 .PHONY: run

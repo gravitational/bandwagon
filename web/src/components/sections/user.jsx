@@ -54,7 +54,7 @@ const UserSection = React.createClass({
   render() {
     return (
       <div className="">
-        <h3 className="">Admin User</h3>
+        <h3 className="">Administrative User</h3>
         <div className="m-t">
           <form ref="form">
             <div className="form-group">

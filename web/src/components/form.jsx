@@ -15,6 +15,7 @@ limitations under the License.
 */
 import React from 'react';
 import UserSection from './sections/user';
+import HostSection from './sections/host';
 import RemoteAssistanceSection from './sections/remoteAssistance';
 import apiUtils from '../utils/apiUtils';
 
@@ -61,12 +62,15 @@ const Form = React.createClass({
 
       let { remoteSupportConfigured } = this.props.application;
       let userData = this.refs.userSection.getData();
+      let hostData = this.refs.hostSection.getData();
       let support = remoteSupportConfigured && this.refs.remoteAssistanceSection.isEnabled();
       let data = {
         ...userData,
+        ...hostData,
         support
       }
 
+      console.log(data);
       apiUtils.post(data)
         .done(this.handleSubmitComplete)
         .fail(this.handleSubmitError)
@@ -100,12 +104,14 @@ const Form = React.createClass({
       <div>
         <div className="my-page-header text-center">
           <div className="text-center">
-            <h2>Congratulations!</h2>
-            <h2 className="m-t-sm">You have successfully installed</h2>
+            <h2 className="m-t-sm">You have successfully installed {application.name}.</h2>
             <h2 className="m-t-sm">
-              <span>{application.name}</span> <small>ver.{application.version}</small>
+              <small>ver.{application.version}</small>
             </h2>
           </div>
+        </div>
+        <div className="my-page-section">
+          <HostSection ref="hostSection"/>
         </div>
         <div className="my-page-section">
           <UserSection ref="userSection"/>

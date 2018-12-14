@@ -19,7 +19,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/gravitational/bandwagon/lib/api"
+	"github.com/tulip/bandwagon/lib/api"
 )
 
 func main() {
