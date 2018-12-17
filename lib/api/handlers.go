@@ -34,7 +34,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/rest"
+	// "k8s.io/client-go/tools/clientcmd"
 )
 
 var kubeconfig *string
@@ -50,7 +51,7 @@ func SetupHandlers() *mux.Router {
 	router := mux.NewRouter()
 	router.HandleFunc("/api/info", infoHandler).Methods("GET")
 	router.HandleFunc("/api/complete", completeHandler).Methods("POST")
-	router.HandleFunc("/api/test", testHandler).Methods("GET")
+	// router.HandleFunc("/api/test", testHandler).Methods("GET")
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir(assetsDir)))
 	return router
 }
@@ -79,11 +80,15 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 	replyString(w, string(info))
 }
 
-func getClientset() *kubernetes.Clientset {
-	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+func getInClusterClientset() *kubernetes.Clientset {
+	config, err := rest.InClusterConfig()
 	if err != nil {
-		panic(err)
+		panic(err.Error())
 	}
+	// config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
@@ -127,13 +132,6 @@ func updateIngresses(hostname string, clientset *kubernetes.Clientset) {
 	}
 }
 
-// INGRESS_SVC_IP=$(kubectl -n default get svc nginx-ingress-controller -o jsonpath='{.spec.clusterIP}')
-// # now we need to inject a HostAlias into the deployment as well
-// kubectl -n default get deployment tulip-factory -o json --export | \
-// 	jq -c --arg ingressIP $INGRESS_SVC_IP \
-// 	' .spec.template.spec.hostAliases |= [{hostnames: ["'$DOMAIN'"], ip: $ingressIP}] ' | \
-// kubectl -n default replace -f -
-
 func updateDeployment(hostname string, clientset *kubernetes.Clientset) {
 	svcClient := clientset.CoreV1().Services(apiv1.NamespaceDefault)
 	svc, getErr := svcClient.Get("local-models", metav1.GetOptions{})
@@ -157,12 +155,13 @@ func updateDeployment(hostname string, clientset *kubernetes.Clientset) {
 	}
 }
 
-func testHandler(w http.ResponseWriter, r *http.Request) {
-	clientset := getClientset()
-	updateConfigmap("onprem.tulip.co", clientset)
-	updateIngresses("onprem.tulip.co", clientset)
-	updateDeployment("onprem.tulip.co", clientset)
-}
+// func testHandler(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("test")
+// 	clientset := getInClusterClientset()
+// 	updateConfigmap("onprem.tulip.co", clientset)
+// 	updateIngresses("onprem.tulip.co", clientset)
+// 	updateDeployment("onprem.tulip.co", clientset)
+// }
 
 // completeHandler configures the site according to the data in the request
 //
@@ -190,7 +189,7 @@ func completeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	clientset := getClientset()
+	clientset := getInClusterClientset()
 	updateConfigmap(req.Hostname, clientset)
 	updateIngresses(req.Hostname, clientset)
 	updateDeployment(req.Hostname, clientset)
