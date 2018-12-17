@@ -134,7 +134,7 @@ func updateIngresses(hostname string, clientset *kubernetes.Clientset) {
 
 func updateDeployment(hostname string, clientset *kubernetes.Clientset) {
 	svcClient := clientset.CoreV1().Services(apiv1.NamespaceDefault)
-	svc, getErr := svcClient.Get("local-models", metav1.GetOptions{})
+	svc, getErr := svcClient.Get("nginx-ingress-controller", metav1.GetOptions{})
 	if getErr != nil {
 		panic(fmt.Errorf("Failed to get latest version of service %v", getErr))
 	}
