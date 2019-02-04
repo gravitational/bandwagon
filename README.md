@@ -40,17 +40,10 @@ installer:
 
 ### Creating a Local User after an Automatic/Unattended Installation
 
-After installing bandwagon with Telekube as part of an automatic/unattended installation, you'll need to create a local user account and password to log into the Telekube web app. First, enter the Telekube environment:
-
-```
-sudo gravity enter
-```
-
-Then, run the following command to create a local user account and password:
-
-```
-gravity --insecure user create --type=admin --email=<email> --password=<yourpass> --ops-url=https://gravity-site.kube-system.svc.cluster.local:3009
-```
+After installing bandwagon with Telekube as part of an automatic/unattended
+installation, you'll need to create a local user account and password to log
+into the Gravity web app. See [Configuring Users](https://gravitational.com/gravity/docs/cluster/#configuring-users-tokens)
+documentation section for the information on how to create a user.
 
 ### Web Client
 
