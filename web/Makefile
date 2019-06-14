@@ -1,42 +1,32 @@
-TAG=1.0.0
-NOROOT=-u $$(id -u):$$(id -g)
-
-CONTAINER_DIR=/app/dist
-HOST_DIR="$$(pwd)/dist"
-DOCKERFLAGS=--rm=true $(NOROOT) -h buildbox -v $(HOST_DIR):$(CONTAINER_DIR) -t bandwagon-web:$(TAG)
-
-##############################
-#   Docker Targets
-##############################
+REPO_VER_TAG := $(shell git describe --tags --abbrev=8)
+CONTAINER_NAME := bandwagon-web-container-$(REPO_VER_TAG)-$(shell bash -c 'echo $$RANDOM')
+IMAGE_NAME := bandwagon-web:6.0.0
+HOST_DIR="$$(pwd)"
 
 #
 # Builds dist files
 #
 .PHONY:docker-build
 docker-build:
-	mkdir -p $(HOST_DIR)
-	docker build --build-arg UID=$$(id -u) --build-arg GID=$$(id -g) --force-rm=true -t bandwagon-web:$(TAG) .
-	docker run $(DOCKERFLAGS) npm run build
-	#docker run -ti $(DOCKERFLAGS) /bin/bash
+	rm -rf $(HOST_DIR)/build
+	docker build --force-rm=true -t $(IMAGE_NAME) .
+	docker create --name $(CONTAINER_NAME) -t $(IMAGE_NAME) && \
+	docker cp $(CONTAINER_NAME):/app/build $(HOST_DIR)
+	docker rm $(CONTAINER_NAME) | true
 
 #
 # Removes the local Docker container
 #
 .PHONY: docker-clean
 docker-clean:
-	docker rmi bandwagon-web:$(TAG)
+	docker rmi --force $(IMAGE_NAME)
 
 #
 # 'make docker-enter' builds a Docker container with a website
 #
 .PHONY:docker-enter
 docker-enter:
-	docker run -ti -p 3000:3000 --rm=true $(NOROOT) -t bandwagon-web:$(TAG) /bin/bash
-
-##############################
-#   Native Localhost
-##############################
-
+	docker run -ti --rm=true -t $(IMAGE_NAME) /bin/bash
 
 #
 # 'make build' installs missing packages required for `make local` to run
