@@ -11,6 +11,9 @@ make run
 
 If something is not working, do `make clean` and then repeat the commands above.
 
+For Web UI development, [use this instructions](web/README.md) to start a local development server with hot updates.
+
+
 ### Enabling It In Your Application
 
 To enable a web app as a custom installer step in your application, you just need to define an endpoint in
@@ -44,7 +47,3 @@ After installing bandwagon with Telekube as part of an automatic/unattended
 installation, you'll need to create a local user account and password to log
 into the Gravity web app. See [Configuring Users](https://gravitational.com/gravity/docs/cluster/#configuring-users-tokens)
 documentation section for the information on how to create a user.
-
-### Web Client
-
-Refer to [web/README.md](web/README.md) for instructions on how to build Web UI.
