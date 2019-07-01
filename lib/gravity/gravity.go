@@ -1,5 +1,5 @@
 /*
-Copyright 2017-2018 Gravitational, Inc.
+Copyright 2017-2019 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,15 +17,16 @@ limitations under the License.
 package gravity
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"text/template"
 
 	"github.com/gravitational/trace"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
+
+var log = logrus.WithField(trace.Component, "bandwagon")
 
 // CreateUser creates a new admin user with the provided email and password.
 func CreateUser(email, password string) error {
@@ -49,52 +50,8 @@ func CreateUser(email, password string) error {
 	return nil
 }
 
-// ConfigureRemoteSupport enables or disables configured trusted cluster.
-func ConfigureRemoteSupport(enabled bool) error {
-	infoS, err := GetClusterInfo()
-	if err != nil {
-		return trace.Wrap(err)
-	}
-	var info clusterInfo
-	if err := json.Unmarshal([]byte(infoS), &info); err != nil {
-		return trace.Wrap(err)
-	}
-	if !info.RemoteSupportConfigured {
-		log.Info("Remote support is not configured.")
-		return nil
-	}
-	action := "disable"
-	if enabled {
-		action = "enable"
-	}
-	out, err := gravityCommand("tunnel", action)
-	if err != nil {
-		return trace.Wrap(err, "failed to %v tunnel: %s", action, out)
-	}
-	log.Infof("Remote support %vd: %s.", action, out)
-	return nil
-}
-
-// clusterInfo is a subset of the local cluster info
-type clusterInfo struct {
-	// RemoteSupportConfigured indicates whether local cluster has remote
-	// support configured (enabled or disabled trusted cluster)
-	RemoteSupportConfigured bool `json:"remoteSupportConfigured"`
-}
-
 // CompleteInstall marks the site installation step as complete.
-func CompleteInstall(support bool) error {
-	// remote support actions are available only in enterprise edition
-	isEnterprise, err := IsEnterprise()
-	if err != nil {
-		return trace.Wrap(err, "failed to determine edition")
-	}
-	if isEnterprise {
-		err := ConfigureRemoteSupport(support)
-		if err != nil {
-			return trace.Wrap(err, "failed to configure remote support")
-		}
-	}
+func CompleteInstall() error {
 	out, err := gravityCommand("site", "complete")
 	if err != nil {
 		return trace.Wrap(err, "failed to complete install: %s", out)
@@ -112,29 +69,6 @@ func GetClusterInfo() (string, error) {
 	log.Infof("Local cluster info: %s.", out)
 	return string(out), nil
 }
-
-// IsEnterprise returns true if the local Telekube cluster is of enterprise
-// edition.
-func IsEnterprise() (bool, error) {
-	bytes, err := gravityCommand("version", "--output=json")
-	if err != nil {
-		return false, trace.Wrap(err, "failed to determine gravity version: %s", bytes)
-	}
-	var ver version
-	if err := json.Unmarshal(bytes, &ver); err != nil {
-		return false, trace.Wrap(err, "failed to parse version as json: %s", bytes)
-	}
-	return ver.Edition == enterprise, nil
-}
-
-// version is a subset of the gravity version object
-type version struct {
-	// Edition is the product edition
-	Edition string `json:"edition"`
-}
-
-// enterprise is the name of the Enterprise edition
-const enterprise = "enterprise"
 
 // gravityCommand runs the gravity command line tool with the provided arguments
 // using locally running gravity site as OpsCenter.

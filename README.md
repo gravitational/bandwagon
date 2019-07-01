@@ -1,6 +1,6 @@
-# Telekube Final Install Step Application
+# Gravity Final Install Step Application
 
-Bandwagon is the application you can fork, customize and tweak to set up last installation step of Telekube install wizard.
+Bandwagon is the application you can fork, customize and tweak to set up last installation step of Gravity install wizard.
 
 ### Making Changes
 
@@ -43,7 +43,7 @@ installer:
 
 ### Creating a Local User after an Automatic/Unattended Installation
 
-After installing bandwagon with Telekube as part of an automatic/unattended
+After installing bandwagon with Gravity as part of an automatic/unattended
 installation, you'll need to create a local user account and password to log
 into the Gravity web app. See [Configuring Users](https://gravitational.com/gravity/docs/cluster/#configuring-users-tokens)
 documentation section for the information on how to create a user.
