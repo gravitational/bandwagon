@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Gravitational, Inc.
+Copyright 2017-2019 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/gorilla/mux"
-
 	"github.com/gravitational/bandwagon/lib/gravity"
+
+	"github.com/gorilla/mux"
 	"github.com/gravitational/trace"
 )
 
@@ -92,7 +92,7 @@ func completeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = gravity.CompleteInstall(req.Support)
+	err = gravity.CompleteInstall()
 	if err != nil {
 		replyError(w, err.Error())
 		return
@@ -107,8 +107,6 @@ type CompleteRequest struct {
 	Email string `json:"email"`
 	// Password is the password of the admin user.
 	Password string `json:"password"`
-	// Support enables/disables remote support with Gravitational OpsCenter.
-	Support bool `json:"support"`
 }
 
 const (

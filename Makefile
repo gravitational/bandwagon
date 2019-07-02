@@ -39,7 +39,7 @@ run: build
 
 
 #
-# The 'app' target builds bandwagon Telekube package in the current directory, for example:
+# The 'app' target builds bandwagon package in the current directory, for example:
 #
 #   $ VERSION=1.2.0 make app
 #
