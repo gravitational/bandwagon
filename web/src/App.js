@@ -19,7 +19,6 @@ import service from './services/api';
 import session from './services/session';
 import Form from './Form';
 import './assets/ubuntu/style.css';
-import './assets/icomoon/style.css'
 import './App.css';
 
 function App() {
