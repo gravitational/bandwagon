@@ -18,8 +18,8 @@ hooks:
           spec:
             restartPolicy: OnFailure
             containers:
-              - name: debian-tall
-                image: quay.io/gravitational/debian-tall:0.0.1
+              - name: install
+                image: quay.io/gravitational/debian-tall:buster
                 command:
                   - /usr/local/bin/kubectl
                   - create
