@@ -1,4 +1,4 @@
-FROM quay.io/gravitational/debian-tall:0.0.1
+FROM quay.io/gravitational/debian-tall:buster
 
 COPY build/bandwagon /opt/bandwagon/
 COPY web/build /opt/bandwagon/web/dist

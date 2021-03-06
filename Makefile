@@ -1,4 +1,4 @@
-export VERSION ?= $(shell git describe --tags)
+export VERSION ?= $(shell ./version.sh)
 NAME := bandwagon
 PACKAGE := gravitational.io/$(NAME):$(VERSION)
 PACKAGE_FILENAME := $(NAME)-$(VERSION).tar.gz
@@ -9,7 +9,7 @@ CURRENT_DIR := $(shell pwd)
 BUILD_DIR := $(CURRENT_DIR)/build
 WEB_APP_DIR := $(CURRENT_DIR)/web
 
-BUILDBOX_IMAGE := quay.io/gravitational/debian-venti:go1.10.3-stretch
+BUILDBOX_IMAGE := quay.io/gravitational/debian-venti:go1.14.13-buster
 BUILDBOX_DIR := /gopath/src/github.com/gravitational/$(NAME)
 
 
